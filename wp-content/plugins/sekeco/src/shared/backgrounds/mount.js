@@ -4,7 +4,10 @@
  * Works on the front end and inside the block editor (the canvas may live in an
  * iframe, so everything is taken from the canvas's own window). Time comes from
  * the GSAP ticker; the picture renders at half resolution, at 30fps, only while
- * visible, and once (no loop) when the visitor prefers reduced motion. The
+ * visible, and once (no loop) when the visitor prefers reduced motion. Phones
+ * and low-memory or few-core devices render smaller and at 20fps. A shader that
+ * fails to compile, or a lost WebGL context, leaves the block on its normal
+ * ground instead of a broken canvas. The
  * shader reads whether the copy is light or dark from the block's text colour,
  * so it follows the site's light and dark mode and the block's tone.
  */
@@ -14,6 +17,17 @@ import { HEAD, SHADERS } from './shaders';
 const VERTEX = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
 
 const noop = () => {};
+
+// Phones and weak devices: fewer pixels and frames, same picture.
+function isLowPower( win ) {
+	const nav = win.navigator;
+
+	return (
+		win.matchMedia( '(max-width: 640px)' ).matches ||
+		( nav.deviceMemory && nav.deviceMemory <= 4 ) ||
+		( nav.hardwareConcurrency && nav.hardwareConcurrency <= 4 )
+	);
+}
 
 function isLightText( canvas ) {
 	const win = canvas.ownerDocument.defaultView;
@@ -59,11 +73,17 @@ export function mountBackground( canvas, type ) {
 	};
 
 	const program = gl.createProgram();
-	gl.attachShader( program, compile( gl.VERTEX_SHADER, VERTEX ) );
-	gl.attachShader( program, compile( gl.FRAGMENT_SHADER, HEAD + body ) );
+	const vertex = compile( gl.VERTEX_SHADER, VERTEX );
+	const fragment = compile( gl.FRAGMENT_SHADER, HEAD + body );
+	gl.attachShader( program, vertex );
+	gl.attachShader( program, fragment );
 	gl.linkProgram( program );
 
-	if ( ! gl.getProgramParameter( program, gl.LINK_STATUS ) ) {
+	if (
+		! gl.getShaderParameter( vertex, gl.COMPILE_STATUS ) ||
+		! gl.getShaderParameter( fragment, gl.COMPILE_STATUS ) ||
+		! gl.getProgramParameter( program, gl.LINK_STATUS )
+	) {
 		return noop;
 	}
 
@@ -86,14 +106,22 @@ export function mountBackground( canvas, type ) {
 	const reduce =
 		win.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ||
 		!! ( win.navigator.connection && win.navigator.connection.saveData );
+	const low = isLowPower( win );
+	const scale = low ? 0.35 : 0.5;
+	const every = low ? 3 : 2;
 	let time = 14 + Math.random() * 60;
 	let dark = isLightText( canvas ) ? 1 : 0;
 	let visible = true;
-	let skip = false;
+	let lost = false;
+	let count = 0;
 
 	const draw = () => {
-		const w = Math.max( 2, Math.round( canvas.clientWidth * 0.5 ) );
-		const h = Math.max( 2, Math.round( canvas.clientHeight * 0.5 ) );
+		if ( lost ) {
+			return;
+		}
+
+		const w = Math.max( 2, Math.round( canvas.clientWidth * scale ) );
+		const h = Math.max( 2, Math.round( canvas.clientHeight * scale ) );
 
 		if ( canvas.width !== w || canvas.height !== h ) {
 			canvas.width = w;
@@ -108,15 +136,25 @@ export function mountBackground( canvas, type ) {
 	};
 
 	const tick = ( _time, deltaTime ) => {
-		skip = ! skip;
+		count = ( count + 1 ) % every;
 
-		if ( skip || ! visible || canvas.ownerDocument.hidden ) {
+		if ( count || lost || ! visible || canvas.ownerDocument.hidden ) {
 			return;
 		}
 
 		time += Math.min( 100, deltaTime ) / 1000;
 		draw();
 	};
+
+	// Losing the GPU context (memory pressure, driver reset): stop and let the
+	// block's own ground show rather than a frozen or blank canvas.
+	const onLost = ( event ) => {
+		event.preventDefault();
+		lost = true;
+		gsap.ticker.remove( tick );
+		canvas.classList.remove( 'is-ready' );
+	};
+	canvas.addEventListener( 'webglcontextlost', onLost );
 
 	draw();
 	canvas.classList.add( 'is-ready' );
@@ -147,6 +185,7 @@ export function mountBackground( canvas, type ) {
 
 	return () => {
 		gsap.ticker.remove( tick );
+		canvas.removeEventListener( 'webglcontextlost', onLost );
 		resize.disconnect();
 		view.disconnect();
 		theme.disconnect();
