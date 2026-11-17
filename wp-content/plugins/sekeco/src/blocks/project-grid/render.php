@@ -74,7 +74,7 @@ if ( 'crew' === $layout ) :
 	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<div class="sk-crew">
 			<div class="sk-crew__lead">
-				<?php echo sekeco_render_project_card( $lead, array( 'eager' => true, 'variant' => 'cover' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php echo sekeco_render_project_card( $lead, array( 'eager' => true, 'variant' => 'cover', 'sizes' => '(min-width: 900px) 42vw, 100vw' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 			<?php if ( $posts || '' !== $crew_note ) : ?>
 				<div class="sk-crew__list">
@@ -91,6 +91,20 @@ if ( 'crew' === $layout ) :
 	<?php
 	return;
 endif;
+
+// Rendered width of a card per layout, mirroring the grid CSS, so the browser
+// picks a srcset candidate that fits instead of the nominal 1024px size.
+$col_vw     = array(
+	2 => '50vw',
+	3 => '33vw',
+	4 => '25vw',
+);
+$card_sizes = array(
+	'mosaic' => '(min-width: 1000px) 58vw, (min-width: 640px) 50vw, 100vw',
+	'reel'   => 'clamp(272px, 31vw, 480px)',
+	'grid'   => '(min-width: 1000px) ' . $col_vw[ $columns ] . ', (min-width: 640px) 50vw, 100vw',
+);
+$card_sizes = isset( $card_sizes[ $layout ] ) ? $card_sizes[ $layout ] : '';
 
 $filter_terms = array();
 
@@ -125,7 +139,7 @@ if ( $filter ) {
 		}
 		?>
 		<div class="sk-projects__item" data-terms="<?php echo esc_attr( implode( ' ', $slugs ) ); ?>">
-			<?php echo sekeco_render_project_card( $item, array( 'eager' => $index < 2 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php echo sekeco_render_project_card( $item, array( 'eager' => $index < 2, 'sizes' => $card_sizes ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
 	<?php endforeach; ?>
 	</div>

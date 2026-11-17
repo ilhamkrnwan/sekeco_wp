@@ -236,7 +236,7 @@ function sekeco_thumbnail_file_exists( $post ) {
  * on one of four palette fields, so a grid never shows empty boxes.
  *
  * @param WP_Post|int $post Post object or ID.
- * @param array       $args Optional: eager (bool), size (string), variant ('cover' keeps a team member on the overlay cover card instead of the portrait card).
+ * @param array       $args Optional: eager (bool, also raises fetch priority), size (string), sizes (string, the img sizes attribute for the card's layout), variant ('cover' keeps a team member on the overlay cover card instead of the portrait card).
  * @return string
  */
 function sekeco_render_project_card( $post, $args = array() ) {
@@ -252,21 +252,28 @@ function sekeco_render_project_card( $post, $args = array() ) {
 			'eager'   => false,
 			'size'    => 'large',
 			'variant' => '',
+			'sizes'   => '',
 		)
 	);
 
 	$type                  = $post->post_type;
 	list( $name, $detail ) = sekeco_split_title( get_the_title( $post ) );
-	$thumb_html            = get_the_post_thumbnail(
-			$post,
-			$args['size'],
-			array(
-				'class'    => 'sk-card__img',
-				'alt'      => '',
-				'loading'  => $args['eager'] ? 'eager' : 'lazy',
-				'decoding' => 'async',
-			)
-		);
+	$thumb_attr            = array(
+		'class'    => 'sk-card__img',
+		'alt'      => '',
+		'loading'  => $args['eager'] ? 'eager' : 'lazy',
+		'decoding' => 'async',
+	);
+
+	if ( '' !== $args['sizes'] ) {
+		$thumb_attr['sizes'] = $args['sizes'];
+	}
+
+	if ( $args['eager'] ) {
+		$thumb_attr['fetchpriority'] = 'high';
+	}
+
+	$thumb_html = get_the_post_thumbnail( $post, $args['size'], $thumb_attr );
 	// A thumbnail whose file is gone from local uploads is not an image: fall back to the cover.
 	$has_image = '' !== $thumb_html && sekeco_thumbnail_file_exists( $post );
 	$tone                  = sekeco_card_tone( $post->ID );
