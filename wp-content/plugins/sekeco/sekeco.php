@@ -3,7 +3,7 @@
  * Plugin Name:       Sekeco
  * Plugin URI:        https://sekeco.github.io
  * Description:       Native content models, motion enhancements, and gap blocks for the Sekeco theme.
- * Version:           0.23.0
+ * Version:           0.24.0
  * Requires at least: 6.7
  * Requires PHP:      7.4
  * Author:            Sekeco
@@ -18,7 +18,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SEKECO_VERSION', '0.23.0' );
+define( 'SEKECO_VERSION', '0.24.0' );
 define( 'SEKECO_FILE', __FILE__ );
 define( 'SEKECO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SEKECO_URL', plugin_dir_url( __FILE__ ) );
@@ -60,6 +60,7 @@ function sekeco_load_modules() {
 			// SEO: share tags and structured data.
 			'seo/settings.php',
 			'seo/meta.php',
+			'seo/schema.php',
 			// Forms and surveys.
 			'forms/forms.php',
 			'forms/render.php',
