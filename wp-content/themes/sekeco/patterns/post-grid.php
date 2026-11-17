@@ -43,6 +43,8 @@
 			<!-- wp:paragraph {"textColor":"muted"} -->
 			<p class="has-muted-color has-text-color"><?php esc_html_e( 'Try a different search or head back to the homepage.', 'sekeco' ); ?></p>
 			<!-- /wp:paragraph -->
+
+			<!-- wp:sekeco/project-grid {"postType":"portfolio","layout":"list","perPage":4} /-->
 		</div>
 		<!-- /wp:group -->
 	<!-- /wp:query-no-results -->
