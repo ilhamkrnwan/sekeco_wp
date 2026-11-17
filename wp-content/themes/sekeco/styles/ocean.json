@@ -1,0 +1,96 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"title": "Ocean",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"color": "#F6F5FB",
+					"name": "Base",
+					"slug": "base"
+				},
+				{
+					"color": "#0B0B16",
+					"name": "Contrast",
+					"slug": "contrast"
+				},
+				{
+					"color": "#FFFFFF",
+					"name": "Surface",
+					"slug": "surface"
+				},
+				{
+					"color": "#5A5972",
+					"name": "Muted",
+					"slug": "muted"
+				},
+				{
+					"color": "#E1DFEE",
+					"name": "Border",
+					"slug": "border"
+				},
+				{
+					"color": "#0877A0",
+					"name": "Brand blue",
+					"slug": "accent"
+				},
+				{
+					"color": "#FFFFFF",
+					"name": "Accent contrast",
+					"slug": "accent-contrast"
+				},
+				{
+					"color": "#07070D",
+					"name": "Ink",
+					"slug": "ink"
+				},
+				{
+					"color": "#F6F5FB",
+					"name": "Paper",
+					"slug": "paper"
+				},
+				{
+					"color": "#A33FBD",
+					"name": "Brand purple",
+					"slug": "violet"
+				},
+				{
+					"color": "#FD065A",
+					"name": "Brand red",
+					"slug": "red"
+				},
+				{
+					"color": "#09C4F7",
+					"name": "Brand cyan",
+					"slug": "cyan"
+				}
+			],
+			"gradients": [
+				{
+					"name": "Sekeco",
+					"slug": "brand",
+					"gradient": "linear-gradient(110deg, #09C4F7 0%, #4D68E4 55%, #A33FBD 100%)"
+				},
+				{
+					"name": "Sekeco glow",
+					"slug": "brand-soft",
+					"gradient": "linear-gradient(110deg, #09C4F7 0%, #4D68E4 45%, #A33FBD 80%, #FD065A 100%)"
+				},
+				{
+					"name": "Blue to purple",
+					"slug": "blue-purple",
+					"gradient": "linear-gradient(135deg, #09C4F7 0%, #4D68E4 100%)"
+				},
+				{
+					"name": "Purple to red",
+					"slug": "purple-red",
+					"gradient": "linear-gradient(135deg, #A33FBD 0%, #FD065A 100%)"
+				}
+			]
+		}
+	},
+	"styles": {
+		"css": "html:root:root{--sk-grad:linear-gradient(110deg,#09c4f7 0%,#4d68e4 55%,#a33fbd 100%);--sk-grad-soft:linear-gradient(110deg,#09c4f7 0%,#4d68e4 45%,#a33fbd 80%,#fd065a 100%)}html[data-theme=\"light\"]:root{--sk-accent:#086b8c;accent-color:#086b8c}html[data-theme=\"dark\"]:root,html:not([data-theme]):root{--sk-accent:#6adcff;accent-color:#6adcff}html .sk-tone--paper{--sk-accent:#086b8c}"
+	}
+}
