@@ -127,6 +127,20 @@ wp-content/
   Hero/CTA tetap memakai palet brand.
 - **404 dan pencarian kosong** — template `404` dan pesan *no results* menampilkan
   kotak cari dan empat Works terbaru (`sekeco/project-grid`, layout `list`).
+- **Satu tata bahasa, lima tujuan** — halaman di bawah homepage memakai kelas bersama
+  (`sk-wrap`, `sk-head`, `sk-story`, dari `assets/css/pages.css`) tetapi tiap template
+  dibangun untuk pekerjaannya sendiri. **Works single**: sampul penuh, ledger fakta
+  (blok `sekeco/facts`) menempel di samping cerita, karya sebelumnya/berikutnya sebagai
+  jalan keluar. **Portfolio single**: lembar produk (teks dan media bersisian, strip fakta,
+  daftar produk lain). **Team single**: profil dengan potret yang menempel. **Journal
+  single**: satu kolom baca, byline, garis progres baca (CSS scroll-driven), tiga judul
+  "Keep reading" (Query dengan `"sekecoRelated": true`). **Arsip**: Works mosaik berfilter,
+  Portfolio baris, Team roster, Journal indeks (entri terbaru memimpin); search berupa
+  daftar dengan label jenis (binding `sekeco/post-type`). Indeks Journal (`home.html`) baru
+  tampil bila Settings → Reading → Posts page diatur ke halaman Journal.
+  Judul `Nama: detail` dipecah di single (`sk-split-title`), `post-excerpt` berkelas
+  `sk-lead` hanya tampil bila excerpt ditulis manual, dan penulis yang namanya hanya login
+  (mis. `admin`) disembunyikan.
 - **Pattern** — namespace `sekeco/*`, disusun dari blok komponen plugin, jadi
   tema dan plugin saling bergantung dan harus kompatibel (commit terpisah).
 - **Menu** — core Navigation dengan overlay `sekeco-drawer` (panel samping, bawaan header)
