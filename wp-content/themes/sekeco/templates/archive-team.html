@@ -2,13 +2,30 @@
 
 <!-- wp:group {"tagName":"main","anchor":"main-content","align":"full","layout":{"type":"default"}} -->
 <main id="main-content" class="wp-block-group alignfull">
-<!-- wp:sekeco/section {"tone":"auto","spacing":"md","className":"sk-page-head"} -->
-<!-- wp:sekeco/section-header {"kicker":"Team","title":"The people <em>behind it.</em>","lead":"A small core team with specialists who join where the work needs them.","level":1} /-->
+<!-- wp:group {"className":"sk-head sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-head sk-wrap">
+<!-- wp:group {"className":"sk-head__grid","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-head__grid">
+<!-- wp:heading {"level":1,"className":"sk-head__title"} -->
+<h1 class="wp-block-heading sk-head__title">The people <em>behind it.</em></h1>
+<!-- /wp:heading -->
 
+
+<!-- wp:paragraph {"className":"sk-head__lead"} -->
+<p class="sk-head__lead">A small core team with specialists who join where the work needs them.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"sk-roster sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-roster sk-wrap">
 <!-- wp:sekeco/project-grid {"postType":"team","layout":"grid","columns":4,"perPage":100,"filter":false} /-->
-<!-- /wp:sekeco/section -->
+</div>
+<!-- /wp:group -->
 
-<!-- wp:pattern {"slug":"sekeco/cta"} /-->
+<!-- wp:pattern {"slug":"sekeco/signoff"} /-->
 </main>
 <!-- /wp:group -->
 

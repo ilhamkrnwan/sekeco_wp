@@ -1,0 +1,1176 @@
+/*
+ * Page templates. One small grammar (wrap, head, story, sign-off) spent five
+ * different ways, because each page has a different job:
+ *
+ *   Works single   the work leads: a full-bleed cover, a ledger beside the story
+ *   Portfolio      a product sheet: text and media side by side, facts in a strip
+ *   Team           a profile: the portrait stays while the person is read
+ *   Journal        a read: one centred column, a byline, more to read after
+ *   Archives       Works a gallery, Portfolio a line-up, Team a roster,
+ *                  Journal an index, search a list of results
+ *
+ * Tokens come from style.css (--sk-*); nothing here sets a colour of its own.
+ */
+
+/* ---------- Grammar ---------- */
+
+.sk-wrap {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: var(--sk-max, 1240px);
+	margin-inline: auto;
+	padding-inline: var(--sk-gutter);
+}
+
+.sk-wrap > *,
+.sk-work-cover__body > * {
+	margin-block: 0;
+}
+
+/* Page head: the title at display scale, a lead beside it. */
+.sk-head {
+	padding-top: clamp(128px, 20vh, 208px);
+	padding-bottom: clamp(40px, 6vw, 88px);
+}
+
+.sk-head__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 24px 48px;
+	align-items: end;
+}
+
+@media (min-width: 900px) {
+
+	.sk-head__grid {
+		grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+	}
+}
+
+.sk-head__grid > * {
+	margin: 0;
+}
+
+.sk-head__title {
+	font-size: clamp(2.75rem, 7.2vw, 6rem);
+	line-height: 1;
+	letter-spacing: -0.04em;
+	text-wrap: balance;
+}
+
+.sk-head__title em,
+.sk-head__title i {
+	font-style: normal;
+	color: var(--sk-muted);
+}
+
+.sk-head__lead {
+	max-width: 44ch;
+	font-size: 1.125rem;
+	line-height: 1.55;
+	color: var(--sk-muted);
+	text-wrap: pretty;
+}
+
+/* Category pills. */
+.sk-pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.sk-pills a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 32px;
+	padding: 0 14px;
+	border: 1px solid var(--sk-line);
+	border-radius: 999px;
+	font-size: 0.8125rem;
+	letter-spacing: 0.02em;
+	color: inherit;
+	text-decoration: none;
+	transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.sk-pills a:hover,
+.sk-pills a:focus-visible {
+	border-color: var(--sk-fg);
+	background: var(--sk-fg);
+	color: var(--sk-bg);
+}
+
+/* A "Name: detail" title: the name large, the detail as a line beneath. */
+.sk-split-title__detail {
+	display: block;
+	max-width: 38ch;
+	margin-top: 0.55em;
+	font-size: clamp(1.125rem, 2vw, 1.5rem);
+	font-weight: 400;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+	text-wrap: balance;
+	color: var(--sk-muted);
+}
+
+/* Story: the body of an entry. Prose keeps a reading measure; images and wide
+   blocks use the whole column. */
+.sk-story {
+	min-width: 0;
+}
+
+.sk-story > :where(p, ul, ol, h2, h3, h4, h5, blockquote, pre, table, details, .wp-block-buttons) {
+	max-width: 68ch;
+}
+
+.sk-story > * + * {
+	margin-block-start: 1.25em;
+}
+
+.sk-story > :where(h2, h3, h4) {
+	margin-block-start: 2.2em;
+	text-wrap: balance;
+}
+
+.sk-story > :where(h2, h3, h4) + * {
+	margin-block-start: 0.7em;
+}
+
+/* Inside a story the headings step down from the page title: h2 reads as a
+   chapter, not a second title. */
+.sk-story > h2 {
+	font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+	line-height: 1.08;
+}
+
+.sk-story > h3 {
+	font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+	line-height: 1.15;
+}
+
+.sk-story > :where(figure, .wp-block-image, .wp-block-gallery, .wp-block-embed) {
+	margin-block: 2.2em;
+}
+
+.sk-story img {
+	border-radius: var(--sk-radius);
+}
+
+.sk-story--lede > p:first-child {
+	font-size: clamp(1.25rem, 1.9vw, 1.5rem);
+	line-height: 1.45;
+	letter-spacing: -0.01em;
+	color: var(--sk-fg);
+	text-wrap: pretty;
+}
+
+/* Sign-off: the compact contact line that closes a page. */
+.sk-signoff {
+	padding-block: clamp(48px, 7vw, 104px);
+}
+
+.sk-signoff__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px 48px;
+	padding-top: clamp(32px, 4vw, 56px);
+	border-top: 1px solid var(--sk-line);
+}
+
+.sk-signoff__row > * {
+	margin: 0;
+}
+
+.sk-signoff__title {
+	font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+	line-height: 1.05;
+	letter-spacing: -0.04em;
+	text-wrap: balance;
+}
+
+/* A subhead above a list or grid on a single page. */
+.sk-more {
+	padding-block: clamp(48px, 7vw, 104px);
+}
+
+.sk-more__title {
+	margin: 0 0 clamp(24px, 3.4vw, 48px);
+	font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+	line-height: 1.05;
+	letter-spacing: -0.04em;
+	text-wrap: balance;
+}
+
+.sk-more__title em,
+.sk-more__title i {
+	font-style: normal;
+	color: var(--sk-muted);
+}
+
+/* ---------- Works single: the work leads ---------- */
+
+.sk-work-cover {
+	position: relative;
+	isolation: isolate;
+	display: flex;
+	align-items: flex-end;
+	min-height: min(92svh, 920px);
+	overflow: hidden;
+	border-radius: 0 0 var(--sk-radius-xl) var(--sk-radius-xl);
+	background: var(--sk-field-bg);
+	color: #fff;
+}
+
+.sk-work-cover .wp-block-post-featured-image {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	margin: 0;
+}
+
+.sk-work-cover .wp-block-post-featured-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 0;
+}
+
+/* The ink scrim keeps white type legible over any photograph. */
+.sk-work-cover::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: linear-gradient(to top, rgb(7 7 13 / 0.88) 0%, rgb(7 7 13 / 0.5) 38%, rgb(7 7 13 / 0) 72%);
+	pointer-events: none;
+}
+
+.sk-work-cover__body {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 100%;
+	max-width: var(--sk-max, 1240px);
+	margin-inline: auto;
+	padding: clamp(160px, 24vh, 240px) var(--sk-gutter) clamp(32px, 5vw, 72px);
+}
+
+.sk-work-cover .sk-pills a {
+	border-color: rgb(255 255 255 / 0.4);
+}
+
+.sk-work-cover .sk-pills a:hover,
+.sk-work-cover .sk-pills a:focus-visible {
+	border-color: #fff;
+	background: #fff;
+	color: var(--sk-ink);
+}
+
+.sk-work-cover .wp-block-post-title {
+	margin: 0;
+	max-width: 14ch;
+	font-size: clamp(2.75rem, 8vw, 6rem);
+	line-height: 0.98;
+	letter-spacing: -0.04em;
+	color: #fff;
+	text-wrap: balance;
+}
+
+.sk-work-cover .sk-split-title__detail {
+	color: rgb(255 255 255 / 0.84);
+}
+
+.sk-work-body {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: clamp(32px, 5vw, 56px);
+	padding-block: clamp(48px, 7vw, 112px);
+}
+
+@media (min-width: 1000px) {
+
+	.sk-work-body {
+		grid-template-columns: minmax(220px, 4fr) minmax(0, 8fr);
+		gap: clamp(48px, 6vw, 96px);
+		align-items: start;
+	}
+
+	.sk-work-body__aside {
+		position: sticky;
+		top: 112px;
+	}
+}
+
+/* No facts: the story takes the whole column. */
+.sk-work-body:not(:has(.sk-facts)) {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.sk-work-body:not(:has(.sk-facts)) .sk-work-body__aside {
+	display: none;
+}
+
+/* Next and previous work: the end of a work is the start of the next one. The
+   link is the title; its ::after stretches over the whole cell. */
+.sk-next {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0;
+	border-top: 1px solid var(--sk-line);
+}
+
+@media (min-width: 800px) {
+
+	.sk-next {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.sk-next > * + * {
+		border-left: 1px solid var(--sk-line);
+	}
+}
+
+.sk-next > :empty {
+	display: none;
+}
+
+.sk-next:has(> :empty) {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.sk-next .wp-block-post-navigation-link {
+	position: relative;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin: 0;
+	padding: clamp(32px, 5vw, 72px) 0;
+}
+
+@media (min-width: 800px) {
+
+	.sk-next .post-navigation-link-previous {
+		padding-right: clamp(24px, 3vw, 48px);
+	}
+
+	.sk-next .post-navigation-link-next {
+		padding-left: clamp(24px, 3vw, 48px);
+		text-align: right;
+		align-items: flex-end;
+	}
+
+	.sk-next > :only-child {
+		border-left: 0;
+		padding-inline: 0;
+	}
+}
+
+.sk-next .post-navigation-link__label {
+	font-size: 0.8125rem;
+	letter-spacing: 0.04em;
+	color: var(--sk-muted);
+}
+
+.sk-next .wp-block-post-navigation-link a {
+	max-width: 18ch;
+	font-family: var(--wp--preset--font-family--display);
+	font-size: clamp(1.75rem, 3.6vw, 3rem);
+	font-weight: 600;
+	line-height: 1.04;
+	letter-spacing: -0.04em;
+	text-wrap: balance;
+	color: var(--sk-fg);
+	text-decoration: underline;
+	text-decoration-color: transparent;
+	text-decoration-thickness: 2px;
+	text-underline-offset: 0.18em;
+	transition: text-decoration-color 0.4s ease;
+}
+
+.sk-next .wp-block-post-navigation-link a::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+}
+
+.sk-next a:hover,
+.sk-next a:focus-visible {
+	text-decoration-color: currentcolor;
+}
+
+/* ---------- Portfolio single: a product sheet ---------- */
+
+.sk-prod {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: clamp(32px, 5vw, 64px);
+	padding-top: clamp(128px, 20vh, 208px);
+	padding-bottom: clamp(40px, 5vw, 72px);
+}
+
+@media (min-width: 1000px) {
+
+	.sk-prod {
+		grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+		gap: clamp(48px, 6vw, 96px);
+		align-items: start;
+	}
+
+	.sk-prod__media {
+		position: sticky;
+		top: 112px;
+	}
+}
+
+.sk-prod__text {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	min-width: 0;
+}
+
+.sk-prod__text > * {
+	margin: 0;
+}
+
+.sk-prod .wp-block-post-title {
+	font-size: clamp(2.5rem, 6vw, 5rem);
+	line-height: 1;
+	letter-spacing: -0.04em;
+	text-wrap: balance;
+}
+
+.sk-prod__media {
+	margin: 0;
+}
+
+.sk-prod__media .wp-block-post-featured-image {
+	margin: 0;
+}
+
+.sk-prod__media img {
+	width: 100%;
+	border-radius: var(--sk-radius);
+}
+
+.sk-prod-facts {
+	padding-bottom: clamp(24px, 3vw, 40px);
+}
+
+/* ---------- Team single: a profile ---------- */
+
+.sk-profile {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: clamp(32px, 5vw, 64px);
+	padding-top: clamp(128px, 20vh, 208px);
+	padding-bottom: clamp(48px, 7vw, 112px);
+}
+
+@media (min-width: 900px) {
+
+	.sk-profile {
+		grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+		gap: clamp(48px, 7vw, 112px);
+		align-items: start;
+	}
+
+	.sk-profile__portrait {
+		position: sticky;
+		top: 112px;
+	}
+}
+
+.sk-profile__portrait {
+	margin: 0;
+}
+
+.sk-profile__portrait .wp-block-post-featured-image {
+	margin: 0;
+}
+
+.sk-profile__portrait img {
+	width: 100%;
+	aspect-ratio: 4 / 5;
+	object-fit: cover;
+	border-radius: var(--sk-radius);
+}
+
+.sk-profile__text {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	min-width: 0;
+}
+
+.sk-profile__text > * {
+	margin: 0;
+}
+
+.sk-profile .wp-block-post-title {
+	font-size: clamp(2.75rem, 7vw, 6rem);
+	line-height: 0.98;
+	letter-spacing: -0.04em;
+	text-wrap: balance;
+}
+
+.sk-profile__role {
+	max-width: 30ch;
+	font-family: var(--wp--preset--font-family--display);
+	font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+	line-height: 1.25;
+	letter-spacing: -0.02em;
+	color: var(--sk-muted);
+}
+
+/* ---------- Journal single: a read ---------- */
+
+.sk-read-progress {
+	position: fixed;
+	inset: 0 0 auto;
+	z-index: 90;
+	height: 3px;
+	margin: 0;
+	background: var(--sk-grad);
+	transform: scaleX(0);
+	transform-origin: left;
+	pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+
+	.sk-read-progress {
+		animation: sk-read-progress linear both;
+		animation-timeline: scroll(root block);
+	}
+}
+
+@keyframes sk-read-progress {
+
+	to {
+		transform: scaleX(1);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.sk-read-progress {
+		display: none;
+	}
+}
+
+.sk-read-head {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	max-width: 960px;
+	margin-inline: auto;
+	padding: clamp(128px, 20vh, 208px) var(--sk-gutter) clamp(32px, 4vw, 56px);
+}
+
+.sk-read-head > * {
+	margin: 0;
+}
+
+.sk-read-head .wp-block-post-title {
+	font-size: clamp(2.25rem, 5.4vw, 4.5rem);
+	line-height: 1.02;
+	letter-spacing: -0.04em;
+	text-wrap: balance;
+}
+
+.sk-read-head .sk-lead {
+	max-width: 52ch;
+	font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+	line-height: 1.5;
+	color: var(--sk-muted);
+	text-wrap: pretty;
+}
+
+.sk-byline {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 24px;
+	font-size: 0.9375rem;
+	color: var(--sk-muted);
+}
+
+.sk-byline > * {
+	margin: 0;
+}
+
+.sk-byline .wp-block-post-author {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: var(--sk-fg);
+}
+
+.sk-byline .wp-block-post-author__avatar img {
+	display: block;
+	border-radius: 50%;
+}
+
+.sk-byline .wp-block-post-author__content {
+	margin: 0;
+}
+
+.sk-byline .wp-block-post-author__name {
+	margin: 0;
+	font-weight: 500;
+}
+
+.sk-byline .wp-block-post-author__byline {
+	display: none;
+}
+
+.sk-read-cover {
+	box-sizing: border-box;
+	max-width: var(--sk-wide, 1320px);
+	margin-inline: auto;
+	padding-inline: var(--sk-gutter);
+}
+
+.sk-read-cover .wp-block-post-featured-image {
+	margin: 0;
+}
+
+.sk-read-cover img {
+	width: 100%;
+	border-radius: var(--sk-radius);
+}
+
+.sk-read-body {
+	box-sizing: border-box;
+	max-width: 720px;
+	margin-inline: auto;
+	padding: clamp(40px, 6vw, 88px) var(--sk-gutter);
+}
+
+.sk-read-body .sk-story > :where(p, ul, ol, h2, h3, h4, h5, blockquote, pre, table, details, .wp-block-buttons) {
+	max-width: none;
+}
+
+.sk-read-body .sk-story > p,
+.sk-read-body .sk-story > :where(ul, ol) {
+	font-size: 1.125rem;
+	line-height: 1.7;
+}
+
+.sk-read-body .sk-story > h2 {
+	font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+}
+
+.sk-read-body .sk-story > h3 {
+	font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+}
+
+.sk-read-body .sk-story blockquote {
+	margin-inline: 0;
+	padding: 0;
+	border: 0;
+	font-family: var(--wp--preset--font-family--display);
+	font-size: clamp(1.5rem, 2.6vw, 2rem);
+	line-height: 1.2;
+	letter-spacing: -0.03em;
+	color: var(--sk-fg);
+}
+
+.sk-read-body .sk-story blockquote p {
+	font-size: inherit;
+	line-height: inherit;
+}
+
+/* Keep reading: text rows, no pictures, so the next read is a choice of titles. */
+.sk-keep {
+	box-sizing: border-box;
+	max-width: 960px;
+	margin-inline: auto;
+	padding: clamp(40px, 6vw, 88px) var(--sk-gutter);
+	border-top: 1px solid var(--sk-line);
+}
+
+.sk-keep__title {
+	margin: 0 0 clamp(16px, 2.4vw, 32px);
+	font-size: clamp(1.5rem, 2.6vw, 2rem);
+	letter-spacing: -0.04em;
+}
+
+.sk-keep .wp-block-post-template {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sk-keep .wp-block-post-template > li {
+	margin: 0;
+	border-top: 1px solid var(--sk-line);
+}
+
+.sk-keep .wp-block-post-template > li:first-child {
+	border-top: 0;
+}
+
+.sk-keep__item {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 8px 32px;
+	padding-block: 24px;
+}
+
+.sk-keep__item > * {
+	margin: 0;
+}
+
+@media (min-width: 800px) {
+
+	.sk-keep__item {
+		grid-template-columns: 150px minmax(0, 1fr);
+	}
+
+	.sk-keep__item .wp-block-post-title,
+	.sk-keep__item .wp-block-post-excerpt {
+		grid-column: 2;
+	}
+}
+
+.sk-keep__item .wp-block-post-title {
+	font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+	line-height: 1.1;
+	letter-spacing: -0.035em;
+	text-wrap: balance;
+}
+
+.sk-keep__item .wp-block-post-title a {
+	color: var(--sk-fg);
+	text-decoration: none;
+}
+
+.sk-keep__item .wp-block-post-title a:hover,
+.sk-keep__item .wp-block-post-title a:focus-visible {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.2em;
+}
+
+.sk-keep__item .wp-block-post-date {
+	grid-row: 1;
+	white-space: nowrap;
+	font-size: 0.875rem;
+	color: var(--sk-muted);
+}
+
+.sk-keep__item .wp-block-post-excerpt {
+	color: var(--sk-muted);
+}
+
+.sk-keep__item .wp-block-post-excerpt__excerpt {
+	margin: 0;
+}
+
+/* Comments sit in the reading column. */
+.sk-read-body .wp-block-comments {
+	margin-top: clamp(48px, 6vw, 88px);
+	padding-top: clamp(32px, 4vw, 56px);
+	border-top: 1px solid var(--sk-line);
+}
+
+/* ---------- Pages: a read, left-aligned under its title ---------- */
+
+.sk-page-body {
+	padding-bottom: clamp(64px, 9vw, 128px);
+}
+
+.sk-page-body > .sk-story > :where(.alignwide, .alignfull) {
+	max-width: none;
+}
+
+/* ---------- Archives ---------- */
+
+/* Works: a gallery. The grid is the page; the filter sits above it. */
+.sk-gallery {
+	padding-bottom: clamp(48px, 7vw, 104px);
+}
+
+/* Portfolio: a line-up to scan. Rows, not cards. */
+.sk-lineup {
+	padding-bottom: clamp(32px, 5vw, 72px);
+}
+
+/* Team: a roster of portraits. */
+.sk-roster {
+	padding-bottom: clamp(32px, 5vw, 72px);
+}
+
+/* Journal: an index. The newest entry leads; the rest are rows. */
+.sk-journal {
+	box-sizing: border-box;
+	max-width: var(--sk-max, 1240px);
+	margin-inline: auto;
+	padding: 0 var(--sk-gutter) clamp(48px, 7vw, 104px);
+}
+
+.sk-journal .wp-block-post-template {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sk-journal .wp-block-post-template > li {
+	margin: 0;
+	border-top: 1px solid var(--sk-line);
+}
+
+.sk-entry {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 16px 40px;
+	padding-block: clamp(24px, 3vw, 40px);
+}
+
+.sk-entry > * {
+	margin: 0;
+}
+
+.sk-entry__text {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	min-width: 0;
+}
+
+.sk-entry__text > * {
+	margin: 0;
+}
+
+.sk-entry .wp-block-post-title {
+	font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+	line-height: 1.06;
+	letter-spacing: -0.04em;
+	text-wrap: balance;
+}
+
+.sk-entry .wp-block-post-title a {
+	color: var(--sk-fg);
+	text-decoration: none;
+}
+
+.sk-entry .wp-block-post-title a:hover,
+.sk-entry .wp-block-post-title a:focus-visible {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.2em;
+}
+
+.sk-entry .wp-block-post-excerpt {
+	max-width: 52ch;
+	color: var(--sk-muted);
+}
+
+.sk-entry .wp-block-post-excerpt__excerpt {
+	margin: 0;
+}
+
+.sk-entry .wp-block-post-date,
+.sk-entry__when {
+	font-size: 0.875rem;
+	color: var(--sk-muted);
+}
+
+.sk-entry .wp-block-post-featured-image {
+	margin: 0;
+}
+
+.sk-entry .wp-block-post-featured-image img {
+	width: 100%;
+	border-radius: var(--sk-radius);
+}
+
+@media (min-width: 900px) {
+
+	.sk-entry {
+		grid-template-columns: 150px minmax(0, 1fr) 240px;
+		align-items: start;
+	}
+
+	.sk-journal .wp-block-post-template > li:first-child .sk-entry {
+		grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+		padding-block: clamp(32px, 4vw, 56px);
+	}
+
+	.sk-journal .wp-block-post-template > li:first-child .sk-entry .wp-block-post-featured-image {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	.sk-journal .wp-block-post-template > li:first-child .sk-entry__text {
+		grid-column: 1;
+		grid-row: 1;
+		justify-content: flex-end;
+	}
+
+	.sk-journal .wp-block-post-template > li:first-child .sk-entry .wp-block-post-title {
+		font-size: clamp(2.25rem, 4.4vw, 3.75rem);
+	}
+
+	.sk-journal .wp-block-post-template > li:first-child .sk-entry .wp-block-post-excerpt {
+		font-size: 1.125rem;
+	}
+
+	.sk-journal .wp-block-post-template > li:first-child .sk-entry__when {
+		display: none;
+	}
+}
+
+/* Search: results as a list that says what each result is. */
+.sk-search-form {
+	max-width: 640px;
+	margin-top: 8px;
+}
+
+.sk-results {
+	box-sizing: border-box;
+	max-width: var(--sk-max, 1240px);
+	margin-inline: auto;
+	padding: 0 var(--sk-gutter) clamp(48px, 7vw, 104px);
+}
+
+.sk-results .wp-block-post-template {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sk-results .wp-block-post-template > li {
+	margin: 0;
+	border-top: 1px solid var(--sk-line);
+}
+
+.sk-result {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 6px 40px;
+	padding-block: clamp(20px, 2.6vw, 32px);
+}
+
+.sk-result > * {
+	margin: 0;
+}
+
+@media (min-width: 800px) {
+
+	.sk-result {
+		grid-template-columns: 120px minmax(0, 1fr);
+	}
+
+	.sk-result .wp-block-post-title,
+	.sk-result .wp-block-post-excerpt {
+		grid-column: 2;
+	}
+}
+
+.sk-result__type {
+	grid-row: 1;
+	font-size: 0.875rem;
+	color: var(--sk-muted);
+}
+
+.sk-result .wp-block-post-title {
+	font-size: clamp(1.375rem, 2.4vw, 2rem);
+	line-height: 1.1;
+	letter-spacing: -0.035em;
+	text-wrap: balance;
+}
+
+.sk-result .wp-block-post-title a {
+	color: var(--sk-fg);
+	text-decoration: none;
+}
+
+.sk-result .wp-block-post-title a:hover,
+.sk-result .wp-block-post-title a:focus-visible {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.2em;
+}
+
+.sk-result .wp-block-post-excerpt {
+	max-width: 60ch;
+	color: var(--sk-muted);
+}
+
+.sk-result .wp-block-post-excerpt__excerpt {
+	margin: 0;
+}
+
+.sk-results .wp-block-query-no-results {
+	padding-block: clamp(24px, 4vw, 56px);
+}
+
+/* The last result keeps its closing line. */
+.sk-journal .wp-block-post-template > li:last-child,
+.sk-results .wp-block-post-template > li:last-child {
+	border-bottom: 1px solid var(--sk-line);
+}
+
+.sk-journal .wp-block-query-pagination,
+.sk-results .wp-block-query-pagination {
+	margin-top: clamp(24px, 3vw, 40px);
+}
+
+/* ---------- 404 ---------- */
+
+.sk-lost {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	padding-bottom: clamp(24px, 4vw, 56px);
+}
+
+.sk-lost > * {
+	margin: 0;
+}
+
+.sk-lost__search {
+	width: 100%;
+	max-width: 560px;
+}
+
+/* Wide pages: the prose keeps no measure, so a layout block can use the column. */
+.sk-story--wide > :where(p, ul, ol, h2, h3, h4, h5, blockquote, pre, table, details, .wp-block-buttons) {
+	max-width: none;
+}
+
+/* ---------- Search field (core Search block on search and 404) ---------- */
+
+.sk-search-form .wp-block-search__inside-wrapper,
+.sk-lost__search .wp-block-search__inside-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 6px 6px 6px 24px;
+	border: 1px solid var(--sk-line);
+	border-radius: 999px;
+	background: var(--sk-surface);
+	transition: border-color 0.3s ease;
+}
+
+.sk-search-form .wp-block-search__inside-wrapper:focus-within,
+.sk-lost__search .wp-block-search__inside-wrapper:focus-within {
+	border-color: var(--sk-fg);
+}
+
+.sk-search-form .wp-block-search__inside-wrapper:has(:focus-visible),
+.sk-lost__search .wp-block-search__inside-wrapper:has(:focus-visible) {
+	outline: 2px solid var(--sk-accent);
+	outline-offset: 3px;
+}
+
+.sk-search-form .wp-block-search__input,
+.sk-lost__search .wp-block-search__input {
+	flex: 1;
+	min-width: 0;
+	min-height: 44px;
+	padding: 0;
+	border: 0;
+	outline: none;
+	background: transparent;
+	color: var(--sk-fg);
+	font: inherit;
+	font-size: 1rem;
+}
+
+.sk-search-form .wp-block-search__input::placeholder,
+.sk-lost__search .wp-block-search__input::placeholder {
+	color: var(--sk-muted);
+	opacity: 1;
+}
+
+.sk-search-form .wp-block-search__button,
+.sk-lost__search .wp-block-search__button {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: var(--sk-fg);
+	color: var(--sk-bg);
+	cursor: pointer;
+	transition: background 0.3s ease, color 0.3s ease;
+}
+
+.sk-search-form .wp-block-search__button:hover,
+.sk-search-form .wp-block-search__button:focus-visible,
+.sk-lost__search .wp-block-search__button:hover,
+.sk-lost__search .wp-block-search__button:focus-visible {
+	background: var(--sk-grad);
+	color: #fff;
+}
+
+/* ---------- Comment form (core Comments blocks) ---------- */
+
+.sk-read-body .wp-block-post-comments-form {
+	margin-top: clamp(32px, 4vw, 48px);
+}
+
+.sk-read-body .comment-reply-title {
+	font-size: clamp(1.25rem, 2vw, 1.5rem);
+	letter-spacing: -0.035em;
+}
+
+.sk-read-body .comment-form label {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 0.875rem;
+	color: var(--sk-muted);
+}
+
+.sk-read-body .comment-form :where(input[type="text"], input[type="email"], input[type="url"], textarea) {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 14px 18px;
+	border: 1px solid var(--sk-line);
+	border-radius: var(--sk-radius-sm, 10px);
+	background: var(--sk-surface);
+	color: var(--sk-fg);
+	font: inherit;
+	transition: border-color 0.3s ease;
+}
+
+.sk-read-body .comment-form :where(input[type="text"], input[type="email"], input[type="url"], textarea):focus {
+	border-color: var(--sk-fg);
+}
+
+.sk-read-body .comment-form-cookies-consent {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	font-size: 0.875rem;
+	color: var(--sk-muted);
+}
+
+.sk-read-body .comment-form-cookies-consent label {
+	margin: 0;
+}
+
+.sk-read-body .comment-form-cookies-consent input {
+	margin-top: 4px;
+	accent-color: var(--sk-accent);
+}

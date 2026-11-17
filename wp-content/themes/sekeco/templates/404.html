@@ -2,27 +2,41 @@
 
 <!-- wp:group {"tagName":"main","anchor":"main-content","align":"full","layout":{"type":"default"}} -->
 <main id="main-content" class="wp-block-group alignfull">
-<!-- wp:sekeco/section {"tone":"auto","spacing":"lg","className":"sk-page-head"} -->
-<!-- wp:sekeco/section-header {"kicker":"Error 404","title":"This page took <em>a different turn.</em>","lead":"The link may be broken, or the page may have moved. Try the menu, or start from the homepage.","level":1} /-->
+<!-- wp:group {"className":"sk-head sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-head sk-wrap">
+<!-- wp:group {"className":"sk-head__grid","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-head__grid">
+<!-- wp:heading {"level":1,"className":"sk-head__title"} -->
+<h1 class="wp-block-heading sk-head__title">This page took <em>a different turn.</em></h1>
+<!-- /wp:heading -->
 
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/">Back to the homepage</a></div>
-<!-- /wp:button -->
 
-<!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/works/">See our work</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons -->
+<!-- wp:paragraph {"className":"sk-head__lead"} -->
+<p class="sk-head__lead">Error 404. The link may be broken, or the page may have moved. Search below, or start from something we made.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
 
-<!-- wp:search {"label":"Search","showLabel":false,"placeholder":"Search the site","buttonText":"Search","buttonPosition":"button-inside","buttonUseIcon":true} /-->
-<!-- /wp:sekeco/section -->
+<!-- wp:group {"className":"sk-lost sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-lost sk-wrap">
+<!-- wp:search {"label":"Search","showLabel":false,"placeholder":"Search the site","buttonText":"Search","buttonPosition":"button-inside","buttonUseIcon":true,"className":"sk-lost__search"} /-->
 
-<!-- wp:sekeco/section {"tone":"auto","spacing":"md"} -->
-<!-- wp:sekeco/section-header {"kicker":"Recent work","title":"Or start with <em>something we made.</em>","level":2} /-->
+<!-- wp:pattern {"slug":"sekeco/lost-actions"} /-->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"sk-more sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-more sk-wrap">
+<!-- wp:heading {"className":"sk-more__title"} -->
+<h2 class="wp-block-heading sk-more__title">Recent <em>work.</em></h2>
+<!-- /wp:heading -->
 
 <!-- wp:sekeco/project-grid {"postType":"portfolio","layout":"list","perPage":4} /-->
-<!-- /wp:sekeco/section -->
+</div>
+<!-- /wp:group -->
+
 </main>
 <!-- /wp:group -->
 

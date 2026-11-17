@@ -2,23 +2,37 @@
 
 <!-- wp:group {"tagName":"main","anchor":"main-content","align":"full","layout":{"type":"default"}} -->
 <main id="main-content" class="wp-block-group alignfull">
-<!-- wp:sekeco/section {"tone":"auto","spacing":"md","className":"sk-page-head"} -->
-<!-- wp:post-terms {"term":"category","fontSize":"small","textColor":"muted"} /-->
+<!-- wp:group {"className":"sk-read-progress","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-read-progress" aria-hidden="true"></div>
+<!-- /wp:group -->
 
+<!-- wp:group {"className":"sk-read-head","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-read-head">
 <!-- wp:post-title {"level":1} /-->
 
-<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap"},"style":{"spacing":{"blockGap":"0.5rem 2rem"}}} -->
-<div class="wp-block-group">
-<!-- wp:post-date {"fontSize":"small","textColor":"muted"} /-->
-<!-- wp:post-author-name {"fontSize":"small","textColor":"muted"} /-->
+<!-- wp:post-excerpt {"moreText":"","excerptLength":40,"className":"sk-lead"} /-->
+
+<!-- wp:group {"className":"sk-byline","layout":{"type":"flex","flexWrap":"wrap"}} -->
+<div class="wp-block-group sk-byline">
+<!-- wp:post-author {"avatarSize":40,"showAvatar":true} /-->
+
+<!-- wp:post-date /-->
+
+<!-- wp:post-time-to-read /-->
+
+<!-- wp:post-terms {"term":"category","separator":"","className":"sk-pills"} /-->
 </div>
 <!-- /wp:group -->
-<!-- /wp:sekeco/section -->
+</div>
+<!-- /wp:group -->
 
-<!-- wp:sekeco/section {"tone":"auto","spacing":"none","width":"narrow"} -->
-<!-- wp:post-featured-image {"aspectRatio":"16/9"} /-->
+<!-- wp:group {"className":"sk-read-cover","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-read-cover"><!-- wp:post-featured-image {"aspectRatio":"21/9","sizeSlug":"full"} /--></div>
+<!-- /wp:group -->
 
-<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+<!-- wp:group {"className":"sk-read-body","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-read-body">
+<!-- wp:post-content {"className":"sk-story","layout":{"type":"default"}} /-->
 
 <!-- wp:comments -->
 <div class="wp-block-comments">
@@ -44,11 +58,34 @@
 	<!-- wp:post-comments-form /-->
 </div>
 <!-- /wp:comments -->
-<!-- /wp:sekeco/section -->
+</div>
+<!-- /wp:group -->
 
-<!-- wp:spacer {"height":"var:preset|spacing|70"} -->
-<div style="height:var(--wp--preset--spacing--70)" aria-hidden="true" class="wp-block-spacer"></div>
-<!-- /wp:spacer -->
+<!-- wp:group {"className":"sk-keep","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-keep">
+<!-- wp:heading {"className":"sk-keep__title"} -->
+<h2 class="wp-block-heading sk-keep__title">Keep reading</h2>
+<!-- /wp:heading -->
+
+<!-- wp:query {"queryId":21,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"exclude","inherit":false,"sekecoRelated":true},"className":"sk-related","layout":{"type":"default"}} -->
+<div class="wp-block-query sk-related">
+	<!-- wp:post-template -->
+		<!-- wp:group {"className":"sk-keep__item","layout":{"type":"default"}} -->
+		<div class="wp-block-group sk-keep__item">
+			<!-- wp:post-date /-->
+
+			<!-- wp:post-title {"level":3,"isLink":true} /-->
+
+			<!-- wp:post-excerpt {"moreText":"","excerptLength":22} /-->
+		</div>
+		<!-- /wp:group -->
+	<!-- /wp:post-template -->
+</div>
+<!-- /wp:query -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:pattern {"slug":"sekeco/signoff"} /-->
 </main>
 <!-- /wp:group -->
 

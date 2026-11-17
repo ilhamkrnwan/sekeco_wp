@@ -2,47 +2,45 @@
 
 <!-- wp:group {"tagName":"main","anchor":"main-content","align":"full","layout":{"type":"default"}} -->
 <main id="main-content" class="wp-block-group alignfull">
-<!-- wp:sekeco/section {"tone":"auto","spacing":"md","width":"default","className":"sk-page-head"} -->
-<!-- wp:post-terms {"term":"category","fontSize":"small","textColor":"muted"} /-->
+<!-- wp:group {"className":"sk-prod sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-prod sk-wrap">
+<!-- wp:group {"className":"sk-prod__text","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-prod__text">
+<!-- wp:post-title {"level":1,"className":"sk-split-title"} /-->
 
-<!-- wp:post-title {"level":1} /-->
+<!-- wp:post-terms {"term":"category","separator":"","className":"sk-pills"} /-->
 
-<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap"},"style":{"spacing":{"blockGap":"0.5rem 2rem"}}} -->
-<div class="wp-block-group">
-<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"sekeco/meta","args":{"key":"sekeco_product_status"}}}},"fontSize":"small","textColor":"muted"} -->
-<p class="has-muted-color has-text-color has-small-font-size">Status</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"sekeco/meta","args":{"key":"sekeco_product_stack"}}}},"fontSize":"small","textColor":"muted"} -->
-<p class="has-muted-color has-text-color has-small-font-size">Stack</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"sekeco/meta","args":{"key":"sekeco_product_year"}}}},"fontSize":"small","textColor":"muted"} -->
-<p class="has-muted-color has-text-color has-small-font-size">Year</p>
-<!-- /wp:paragraph -->
-</div>
-<!-- /wp:group -->
+<!-- wp:post-content {"className":"sk-story sk-story--lede","layout":{"type":"default"}} /-->
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button {"metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_product_url"}}}}} -->
 <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#">Visit product</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons -->
-<!-- /wp:sekeco/section -->
+</div>
+<!-- /wp:group -->
 
-<!-- wp:sekeco/section {"tone":"auto","spacing":"md","width":"narrow"} -->
-<!-- wp:post-featured-image {"aspectRatio":"16/9"} /-->
+<!-- wp:group {"className":"sk-prod__media","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-prod__media"><!-- wp:post-featured-image {"aspectRatio":"4/3","sizeSlug":"large"} /--></div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
 
-<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
-<!-- /wp:sekeco/section -->
+<!-- wp:group {"className":"sk-prod-facts sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-prod-facts sk-wrap"><!-- wp:sekeco/facts {"layout":"strip"} /--></div>
+<!-- /wp:group -->
 
-<!-- wp:sekeco/section {"tone":"surface","spacing":"md","stacked":true} -->
-<!-- wp:sekeco/section-header {"title":"More <em>products.</em>"} /-->
+<!-- wp:group {"className":"sk-more sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-more sk-wrap">
+<!-- wp:heading {"className":"sk-more__title"} -->
+<h2 class="wp-block-heading sk-more__title">Also in the <em>portfolio.</em></h2>
+<!-- /wp:heading -->
 
-<!-- wp:sekeco/project-grid {"postType":"product","layout":"grid","columns":3,"perPage":3} /-->
-<!-- /wp:sekeco/section -->
+<!-- wp:sekeco/project-grid {"postType":"product","layout":"list","perPage":4} /-->
+</div>
+<!-- /wp:group -->
 
-<!-- wp:pattern {"slug":"sekeco/cta"} /-->
+<!-- wp:pattern {"slug":"sekeco/signoff"} /-->
 </main>
 <!-- /wp:group -->
 

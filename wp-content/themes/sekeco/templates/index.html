@@ -2,11 +2,20 @@
 
 <!-- wp:group {"tagName":"main","anchor":"main-content","align":"full","layout":{"type":"default"}} -->
 <main id="main-content" class="wp-block-group alignfull">
-<!-- wp:sekeco/section {"tone":"auto","spacing":"md","className":"sk-page-head"} -->
-<!-- wp:query-title {"type":"archive","showPrefix":false,"level":1} /-->
+<!-- wp:group {"className":"sk-head sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-head sk-wrap">
+<!-- wp:group {"className":"sk-head__grid","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-head__grid">
+<!-- wp:query-title {"type":"archive","showPrefix":false,"level":1,"className":"sk-head__title"} /-->
+
+
+<!-- wp:term-description {"className":"sk-head__lead"} /-->
+</div>
+<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
 
 <!-- wp:pattern {"slug":"sekeco/post-grid"} /-->
-<!-- /wp:sekeco/section -->
 </main>
 <!-- /wp:group -->
 

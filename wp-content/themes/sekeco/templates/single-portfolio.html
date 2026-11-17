@@ -2,45 +2,37 @@
 
 <!-- wp:group {"tagName":"main","anchor":"main-content","align":"full","layout":{"type":"default"}} -->
 <main id="main-content" class="wp-block-group alignfull">
-<!-- wp:sekeco/section {"tone":"auto","spacing":"md","width":"default","className":"sk-page-head"} -->
-<!-- wp:post-terms {"term":"category","fontSize":"small","textColor":"muted"} /-->
+<!-- wp:group {"className":"sk-work-cover","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-work-cover">
+<!-- wp:post-featured-image {"sizeSlug":"full"} /-->
 
-<!-- wp:post-title {"level":1} /-->
+<!-- wp:group {"className":"sk-work-cover__body","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-work-cover__body">
+<!-- wp:post-title {"level":1,"className":"sk-split-title"} /-->
 
-<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap"},"style":{"spacing":{"blockGap":"0.5rem 2rem"}}} -->
-<div class="wp-block-group">
-<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"sekeco/meta","args":{"key":"sekeco_portfolio_client"}}}},"fontSize":"small","textColor":"muted"} -->
-<p class="has-muted-color has-text-color has-small-font-size">Client</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"sekeco/meta","args":{"key":"sekeco_portfolio_year"}}}},"fontSize":"small","textColor":"muted"} -->
-<p class="has-muted-color has-text-color has-small-font-size">Year</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"sekeco/meta","args":{"key":"sekeco_portfolio_role"}}}},"fontSize":"small","textColor":"muted"} -->
-<p class="has-muted-color has-text-color has-small-font-size">Role</p>
-<!-- /wp:paragraph -->
+<!-- wp:post-terms {"term":"category","separator":"","className":"sk-pills"} /-->
+</div>
+<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_portfolio_url"}}}}} -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#">Visit project</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons -->
-<!-- /wp:sekeco/section -->
+<!-- wp:group {"className":"sk-work-body sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-work-body sk-wrap">
+<!-- wp:group {"tagName":"aside","className":"sk-work-body__aside","layout":{"type":"default"}} -->
+<aside class="wp-block-group sk-work-body__aside"><!-- wp:sekeco/facts /--></aside>
+<!-- /wp:group -->
 
-<!-- wp:sekeco/section {"tone":"auto","spacing":"md","width":"narrow"} -->
-<!-- wp:post-featured-image {"aspectRatio":"16/9"} /-->
+<!-- wp:post-content {"className":"sk-story sk-story--lede","layout":{"type":"default"}} /-->
+</div>
+<!-- /wp:group -->
 
-<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
-<!-- /wp:sekeco/section -->
+<!-- wp:group {"className":"sk-next sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-next sk-wrap">
+<!-- wp:post-navigation-link {"type":"previous","label":"Previous work","showTitle":true,"linkLabel":false} /-->
 
-<!-- wp:sekeco/section {"tone":"surface","spacing":"md","stacked":true} -->
-<!-- wp:sekeco/section-header {"title":"More <em>works.</em>"} /-->
-
-<!-- wp:sekeco/project-grid {"postType":"portfolio","layout":"grid","columns":3,"perPage":3} /-->
-<!-- /wp:sekeco/section -->
+<!-- wp:post-navigation-link {"label":"Next work","showTitle":true,"linkLabel":false} /-->
+</div>
+<!-- /wp:group -->
 
 <!-- wp:pattern {"slug":"sekeco/cta"} /-->
 </main>

@@ -2,49 +2,39 @@
 
 <!-- wp:group {"tagName":"main","anchor":"main-content","align":"full","layout":{"type":"default"}} -->
 <main id="main-content" class="wp-block-group alignfull">
-<!-- wp:sekeco/section {"tone":"auto","spacing":"md","className":"sk-page-head"} -->
-<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"var:preset|spacing|50"}}} -->
-<div class="wp-block-group">
-<!-- wp:post-featured-image {"aspectRatio":"4/5","width":"220px","style":{"border":{"radius":"16px"}}} /-->
+<!-- wp:group {"className":"sk-profile sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-profile sk-wrap">
+<!-- wp:group {"className":"sk-profile__portrait","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-profile__portrait"><!-- wp:post-featured-image {"aspectRatio":"4/5","sizeSlug":"large"} /--></div>
+<!-- /wp:group -->
 
-<!-- wp:group {"layout":{"type":"default"},"style":{"spacing":{"blockGap":"var:preset|spacing|30"}}} -->
-<div class="wp-block-group">
+<!-- wp:group {"className":"sk-profile__text","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-profile__text">
 <!-- wp:post-title {"level":1} /-->
 
-<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"sekeco/meta","args":{"key":"sekeco_team_role"}}}},"fontSize":"large","textColor":"muted"} -->
-<p class="has-muted-color has-text-color has-large-font-size">Role</p>
+<!-- wp:paragraph {"className":"sk-profile__role","metadata":{"bindings":{"content":{"source":"sekeco/meta","args":{"key":"sekeco_team_role"}}}}} -->
+<p class="sk-profile__role">Role</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-outline","metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_team_github"}}}},"fontSize":"small"} -->
-<div class="wp-block-button has-custom-font-size is-style-outline has-small-font-size"><a class="wp-block-button__link wp-element-button" href="#">GitHub</a></div>
-<!-- /wp:button -->
+<!-- wp:post-content {"className":"sk-story sk-story--lede","layout":{"type":"default"}} /-->
 
-<!-- wp:button {"className":"is-style-outline","metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_team_linkedin"}}}},"fontSize":"small"} -->
-<div class="wp-block-button has-custom-font-size is-style-outline has-small-font-size"><a class="wp-block-button__link wp-element-button" href="#">LinkedIn</a></div>
-<!-- /wp:button -->
-
-<!-- wp:button {"className":"is-style-outline","metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_team_instagram"}}}},"fontSize":"small"} -->
-<div class="wp-block-button has-custom-font-size is-style-outline has-small-font-size"><a class="wp-block-button__link wp-element-button" href="#">Instagram</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons -->
+<!-- wp:sekeco/facts {"layout":"links"} /-->
 </div>
 <!-- /wp:group -->
 </div>
 <!-- /wp:group -->
-<!-- /wp:sekeco/section -->
 
-<!-- wp:sekeco/section {"tone":"auto","spacing":"md","width":"narrow"} -->
-<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
-<!-- /wp:sekeco/section -->
-
-<!-- wp:sekeco/section {"tone":"surface","spacing":"md","stacked":true,"requires":"team"} -->
-<!-- wp:sekeco/section-header {"title":"The rest of <em>the team.</em>"} /-->
+<!-- wp:group {"className":"sk-more sk-wrap","layout":{"type":"default"},"metadata":{"name":"The rest of the team"}} -->
+<div class="wp-block-group sk-more sk-wrap">
+<!-- wp:heading {"className":"sk-more__title"} -->
+<h2 class="wp-block-heading sk-more__title">The rest of <em>the team.</em></h2>
+<!-- /wp:heading -->
 
 <!-- wp:sekeco/project-grid {"postType":"team","layout":"grid","columns":4,"perPage":4} /-->
-<!-- /wp:sekeco/section -->
+</div>
+<!-- /wp:group -->
 
-<!-- wp:pattern {"slug":"sekeco/cta"} /-->
+<!-- wp:pattern {"slug":"sekeco/signoff"} /-->
 </main>
 <!-- /wp:group -->
 
