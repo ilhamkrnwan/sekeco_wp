@@ -78,3 +78,38 @@ function sekeco_register_bindings() {
 	);
 }
 add_action( 'init', 'sekeco_register_bindings' );
+
+/**
+ * Label of the entry's content type: Works, Portfolio, Team, Journal or Page.
+ *
+ * Lets a template name what kind of thing a result is, e.g. in search, where
+ * one list mixes every public type.
+ *
+ * @param array    $source_args    Unused.
+ * @param WP_Block $block_instance Block instance.
+ * @return string|null
+ */
+function sekeco_binding_post_type_get_value( array $source_args, $block_instance ) {
+	$post_id = $block_instance->context['postId'] ?? get_the_ID();
+	$type    = $post_id ? get_post_type( $post_id ) : '';
+	$labels  = function_exists( 'sekeco_search_types' ) ? sekeco_search_types() : array();
+
+	return isset( $labels[ $type ] ) ? $labels[ $type ] : null;
+}
+
+/**
+ * Register the post type label binding source.
+ *
+ * @return void
+ */
+function sekeco_register_post_type_binding() {
+	register_block_bindings_source(
+		'sekeco/post-type',
+		array(
+			'label'              => __( 'Sekeco content type', 'sekeco' ),
+			'get_value_callback' => 'sekeco_binding_post_type_get_value',
+			'uses_context'       => array( 'postId' ),
+		)
+	);
+}
+add_action( 'init', 'sekeco_register_post_type_binding' );

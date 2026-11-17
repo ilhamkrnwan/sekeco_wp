@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "sekeco/facts",
+  "version": "1.0.0",
+  "title": "Facts",
+  "category": "sekeco-content",
+  "description": "The entry's own fields as a ledger: client, role and year for a work; status and stack for a product; links for a team member. Empty fields hide themselves.",
+  "keywords": [
+    "facts",
+    "meta",
+    "details",
+    "ledger",
+    "links"
+  ],
+  "textdomain": "sekeco",
+  "attributes": {
+    "layout": {
+      "type": "string",
+      "enum": [
+        "ledger",
+        "strip",
+        "links"
+      ],
+      "default": "ledger"
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "spacing": {
+      "margin": [
+        "top",
+        "bottom"
+      ]
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "example": {}
+}

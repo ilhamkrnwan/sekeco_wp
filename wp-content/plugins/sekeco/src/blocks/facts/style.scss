@@ -1,0 +1,164 @@
+// Facts: the entry's own fields. Three shapes of one thing: a stacked ledger
+// (a column beside the story), a strip (one row under a header) and a row of
+// link pills (a person's profiles).
+.sk-facts {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	color: var(--sk-fg);
+
+	dt {
+		margin: 0;
+		font-size: 0.8125rem;
+		line-height: 1.4;
+		letter-spacing: 0.04em;
+		color: var(--sk-muted);
+	}
+
+	dd {
+		margin: 0;
+		font-size: 1.0625rem;
+		line-height: 1.4;
+	}
+}
+
+.sk-facts__row {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	min-width: 0;
+}
+
+// Ledger: label left, value right, hairline between rows.
+.sk-facts--ledger {
+	display: flex;
+	flex-direction: column;
+
+	.sk-facts__row {
+		flex-direction: row;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 16px;
+		padding-block: 16px;
+		border-top: 1px solid var(--sk-line);
+
+		&:last-child {
+			border-bottom: 1px solid var(--sk-line);
+		}
+	}
+
+	dd {
+		text-align: right;
+		overflow-wrap: anywhere;
+	}
+
+	.sk-facts__chips {
+		justify-content: flex-end;
+	}
+}
+
+// Strip: columns divided by hairlines, label above value.
+.sk-facts--strip {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	border-block: 1px solid var(--sk-line);
+
+	.sk-facts__row {
+		gap: 10px;
+		padding: 24px 24px 24px 0;
+
+		+ .sk-facts__row {
+			padding-left: 24px;
+			border-left: 1px solid var(--sk-line);
+		}
+	}
+
+	dd {
+		font-size: 1.25rem;
+	}
+
+	@media (max-width: 599px) {
+
+		.sk-facts__row + .sk-facts__row {
+			padding-left: 0;
+			border-left: 0;
+			border-top: 1px solid var(--sk-line);
+		}
+	}
+}
+
+.sk-facts__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	color: inherit;
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.25em;
+	transition: color 0.3s ease;
+
+	&:hover,
+	&:focus-visible {
+		color: var(--sk-accent);
+	}
+}
+
+.sk-facts__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	li {
+		padding: 4px 12px;
+		border: 1px solid var(--sk-line);
+		border-radius: 999px;
+		font-size: 0.875rem;
+		line-height: 1.4;
+	}
+}
+
+// A live product gets a small cyan beacon.
+.sk-facts__status {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+
+	&.is-live::before {
+		content: "";
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: var(--sk-cyan, #09c4f7);
+	}
+}
+
+// Links: profile pills.
+.sk-facts--links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.sk-facts__pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 0 18px;
+	border: 1px solid var(--sk-line);
+	border-radius: 999px;
+	color: var(--sk-fg);
+	font-size: 0.9375rem;
+	text-decoration: none;
+	transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+	&:hover,
+	&:focus-visible {
+		border-color: var(--sk-fg);
+		background: var(--sk-fg);
+		color: var(--sk-bg);
+	}
+}

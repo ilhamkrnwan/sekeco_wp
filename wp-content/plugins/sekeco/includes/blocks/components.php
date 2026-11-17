@@ -37,6 +37,7 @@ function sekeco_component_blocks() {
 			'testimonial',
 			'cta',
 			'project-grid',
+			'facts',
 			'theme-toggle',
 			'search',
 			'scroll-top',
@@ -105,6 +106,79 @@ function sekeco_split_title( $title ) {
 	}
 
 	return array( trim( substr( $title, 0, $pos ) ), trim( substr( $title, $pos + 1 ) ) );
+}
+
+/**
+ * The facts of one entry, in reading order, with empty fields left out.
+ *
+ * Each fact is array( label, type, value, ... ): type `text`, `status`, `chips`
+ * (items), or `link` (url, value = host, label = what the link is).
+ *
+ * @param WP_Post $post Entry.
+ * @return array<int,array<string,mixed>>
+ */
+function sekeco_entry_facts( $post ) {
+	$meta  = static function ( $key ) use ( $post ) {
+		return trim( (string) get_post_meta( $post->ID, $key, true ) );
+	};
+	$facts = array();
+	$text  = static function ( $label, $value, $type = 'text' ) use ( &$facts ) {
+		if ( '' !== $value ) {
+			$facts[] = array(
+				'label' => $label,
+				'type'  => $type,
+				'value' => $value,
+			);
+		}
+	};
+	$link  = static function ( $label, $url ) use ( &$facts ) {
+		$url  = esc_url_raw( $url );
+		$host = $url ? preg_replace( '#^www\.#', '', (string) wp_parse_url( $url, PHP_URL_HOST ) ) : '';
+
+		if ( '' !== $url && '' !== $host ) {
+			$facts[] = array(
+				'label' => $label,
+				'type'  => 'link',
+				'value' => $host,
+				'url'   => $url,
+			);
+		}
+	};
+
+	switch ( $post->post_type ) {
+		case 'portfolio':
+			$text( __( 'Client', 'sekeco' ), $meta( 'sekeco_portfolio_client' ) );
+			$text( __( 'Role', 'sekeco' ), $meta( 'sekeco_portfolio_role' ) );
+			$text( __( 'Year', 'sekeco' ), $meta( 'sekeco_portfolio_year' ) );
+			$link( __( 'Project', 'sekeco' ), $meta( 'sekeco_portfolio_url' ) );
+			break;
+
+		case 'product':
+			$text( __( 'Status', 'sekeco' ), $meta( 'sekeco_product_status' ), 'status' );
+
+			$stack = array_filter( array_map( 'trim', preg_split( '/[,\/|·]+/', $meta( 'sekeco_product_stack' ) ) ) );
+
+			if ( $stack ) {
+				$facts[] = array(
+					'label' => __( 'Stack', 'sekeco' ),
+					'type'  => 'chips',
+					'value' => implode( ', ', $stack ),
+					'items' => array_values( $stack ),
+				);
+			}
+
+			$text( __( 'Year', 'sekeco' ), $meta( 'sekeco_product_year' ) );
+			$text( __( 'Repository', 'sekeco' ), $meta( 'sekeco_product_repo' ) );
+			break;
+
+		case 'team':
+			$link( 'GitHub', $meta( 'sekeco_team_github' ) );
+			$link( 'LinkedIn', $meta( 'sekeco_team_linkedin' ) );
+			$link( 'Instagram', $meta( 'sekeco_team_instagram' ) );
+			break;
+	}
+
+	return $facts;
 }
 
 /**
