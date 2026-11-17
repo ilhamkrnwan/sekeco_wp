@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "radial-halo",
+        "value": "*",
+        "files": [
+          ".impeccable/gradient-variations.html"
+        ],
+        "createdAt": "2026-11-08T19:28:33.529Z",
+        "reason": "Gallery whose purpose is comparing brand background gradients; the user asked for gradient options based on the hero and CTA backgrounds"
+      }
+    ]
+  }
+}
