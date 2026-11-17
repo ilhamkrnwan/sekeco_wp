@@ -34,8 +34,8 @@ node_modules/
 vendor/
 
 # Agent tooling (project rules live in AGENTS.md)
-.agents/
-.claude/
+.agents
+.claude
 CLAUDE.md
 skills-lock.json
 
