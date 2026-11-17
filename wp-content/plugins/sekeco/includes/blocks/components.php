@@ -262,6 +262,11 @@ function sekeco_query_projects( $post_type, $count, $term_id = 0 ) {
 		'no_found_rows'       => true,
 	);
 
+	// On the entry's own page, "more" never lists the entry itself.
+	if ( is_singular( $post_type ) ) {
+		$args['post__not_in'] = array( get_queried_object_id() );
+	}
+
 	if ( 'team' === $post_type ) {
 		$args['orderby'] = array(
 			'menu_order' => 'ASC',
