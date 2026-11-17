@@ -120,6 +120,13 @@ wp-content/
 - **Template** — `front-page`, `home`, `index`, `page`, `single`, `single-portfolio`, `single-product`,
   `single-team`, `single-sekeco_form`, `form-canvas`, `archive`,
   `archive-portfolio`, `archive-product`, `archive-team`, `search`, `404`.
+- **Style variation** — `styles/orchid.json` dan `styles/ocean.json` (Site Editor →
+  Styles → Browse styles). Keduanya menukar preset `accent`, gradient brand, dan
+  token `--sk-accent`/`--sk-grad` yang di-hardcode `style.css`, lewat `styles.css`
+  dengan spesifisitas tinggi agar menang atas scope terang, gelap, dan tone. Shader
+  Hero/CTA tetap memakai palet brand.
+- **404 dan pencarian kosong** — template `404` dan pesan *no results* menampilkan
+  kotak cari dan empat Works terbaru (`sekeco/project-grid`, layout `list`).
 - **Pattern** — namespace `sekeco/*`, disusun dari blok komponen plugin, jadi
   tema dan plugin saling bergantung dan harus kompatibel (commit terpisah).
 - **Menu** — core Navigation dengan overlay `sekeco-drawer` (panel samping, bawaan header)
@@ -178,6 +185,32 @@ wp-content/
 Modul dimuat oleh `sekeco_load_modules()`; file modul yang belum ada dilewati,
 sehingga pengembangan bisa bertahap.
 
+### SEO dan data terstruktur
+
+- `includes/seo/meta.php` mencetak `meta description`, Open Graph, dan Twitter card
+  (canonical, robots, dan judul tetap dari core). Deskripsi diambil dari excerpt atau
+  isi, ditambah peran untuk Team; gambar dari featured image, lalu gambar default,
+  lalu ikon situs. Fallback diatur di **Settings → Sekeco SEO** (deskripsi, gambar
+  bagikan 1200 × 630, handle X). Ubah per halaman lewat filter `sekeco_seo_context`.
+- `includes/seo/schema.php` mencetak satu `@graph` JSON-LD: `Organization` dan
+  `WebSite` di semua halaman; `CreativeWork` (Works), `SoftwareApplication`
+  (Portfolio), `Person` (Team, tanpa email), `Article` (Journal); satu `FAQPage` dari
+  blok FAQ di halaman itu. Filter: `sekeco_schema_graph`.
+- Tidak ada tag di 404, feed, embed, hasil cari, atau saat situs diatur *discourage
+  search engines*.
+
+### Gambar dan performa
+
+- `includes/media.php`: ukuran turunan upload baru dibuat sebagai AVIF (JPEG) atau WebP
+  (PNG); file asli tetap. Gambar lama baru ikut setelah di-regenerate. Filter
+  `sekeco_image_output_formats` untuk mengubah atau mematikan.
+- Kartu `project-grid` mengirim atribut `sizes` sesuai layout (grid, mosaic, reel,
+  crew) dan `fetchpriority="high"` untuk kartu eager.
+- Shader Hero/CTA: setengah resolusi dan 30fps, jeda di luar layar, satu frame untuk
+  reduced-motion dan Data Saver; ponsel serta perangkat ≤ 4 GB RAM atau ≤ 4 core turun
+  ke 35% resolusi dan 20fps. Shader gagal compile atau context WebGL hilang membuat
+  blok kembali ke ground normalnya.
+
 ### Form
 
 - Builder berupa meta box di editor klasik (bukan block editor): kartu field
@@ -226,6 +259,14 @@ curl -s -o /dev/null -w '%{http_code}\n' http://localhost/team/
 
 # tidak ada error PHP saat request
 ls wp-content/debug.log 2>/dev/null || echo "bersih"
+```
+
+Skrip smoke (read-only, tidak membuat konten) memeriksa arsip, single, redirect legacy,
+tag SEO dan JSON-LD, REST, 404, dan saran di pencarian kosong:
+
+```sh
+wp-content/plugins/sekeco/scripts/smoke.sh            # http://localhost
+wp-content/plugins/sekeco/scripts/smoke.sh https://staging.example.com
 ```
 
 ## 9. Troubleshooting
