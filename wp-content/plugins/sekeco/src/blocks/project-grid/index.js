@@ -118,6 +118,13 @@ function Edit( { attributes, setAttributes } ) {
 								label: __( 'Index list', 'sekeco' ),
 								value: 'list',
 							},
+							{
+								label: __(
+									'Catalog (rows, filter and search)',
+									'sekeco'
+								),
+								value: 'catalog',
+							},
 							...( 'team' === postType
 								? [
 										{
@@ -152,11 +159,22 @@ function Edit( { attributes, setAttributes } ) {
 					{ ! [ 'list', 'crew' ].includes( layout ) && (
 						<ToggleControl
 							__nextHasNoMarginBottom
-							label={ __( 'Category filter', 'sekeco' ) }
-							help={ __(
-								'Adds filter buttons above the entries.',
-								'sekeco'
-							) }
+							label={
+								'catalog' === layout
+									? __( 'Type filter and search', 'sekeco' )
+									: __( 'Category filter', 'sekeco' )
+							}
+							help={
+								'catalog' === layout
+									? __(
+											'Adds filter buttons by product type and a search box above the rows.',
+											'sekeco'
+										)
+									: __(
+											'Adds filter buttons above the entries.',
+											'sekeco'
+										)
+							}
 							checked={ filter }
 							onChange={ ( value ) =>
 								setAttributes( { filter: value } )

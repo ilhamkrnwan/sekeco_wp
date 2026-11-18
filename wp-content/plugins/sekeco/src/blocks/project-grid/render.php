@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 $post_type = isset( $attributes['postType'] ) ? sanitize_key( $attributes['postType'] ) : 'portfolio';
 $post_type = in_array( $post_type, sekeco_project_post_types(), true ) ? $post_type : 'portfolio';
 $layout    = isset( $attributes['layout'] ) ? $attributes['layout'] : 'grid';
-$layout    = in_array( $layout, array( 'grid', 'mosaic', 'reel', 'list', 'crew' ), true ) ? $layout : 'grid';
+$layout    = in_array( $layout, array( 'grid', 'mosaic', 'reel', 'list', 'catalog', 'crew' ), true ) ? $layout : 'grid';
 $layout    = ( 'crew' === $layout && 'team' !== $post_type ) ? 'grid' : $layout;
 $crew_note = isset( $attributes['crewNote'] ) ? wp_strip_all_tags( $attributes['crewNote'] ) : '';
 $columns   = isset( $attributes['columns'] ) ? max( 2, min( 4, (int) $attributes['columns'] ) ) : 3;
@@ -39,6 +39,76 @@ if ( 'grid' === $layout ) {
 }
 
 $wrapper_attributes = get_block_wrapper_attributes( array( 'class' => implode( ' ', $classes ) ) );
+
+if ( 'catalog' === $layout ) :
+	$types = array();
+
+	foreach ( $posts as $item ) {
+		$label = 'product' === $item->post_type ? (string) get_post_meta( $item->ID, 'sekeco_product_type', true ) : '';
+		$label = '' !== $label ? $label : __( 'Other', 'sekeco' );
+
+		$types[ $label ] = isset( $types[ $label ] ) ? $types[ $label ] + 1 : 1;
+	}
+
+	// "Other" is the bucket for untyped entries and always goes last.
+	$other = __( 'Other', 'sekeco' );
+
+	if ( isset( $types[ $other ] ) ) {
+		$other_count = $types[ $other ];
+		unset( $types[ $other ] );
+		$types[ $other ] = $other_count;
+	}
+
+	$use_filter = $filter && count( $types ) > 1;
+	?>
+	<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $filter ? ' data-sk-filter' : ''; ?>>
+		<?php if ( $filter ) : ?>
+			<div class="sk-catalog__bar">
+				<?php if ( $use_filter ) : ?>
+					<div class="sk-filter" role="group" aria-label="<?php esc_attr_e( 'Filter by type', 'sekeco' ); ?>">
+						<button type="button" class="sk-filter__btn is-active" data-filter="*" aria-pressed="true"><?php esc_html_e( 'All', 'sekeco' ); ?> <span class="sk-filter__count"><?php echo (int) count( $posts ); ?></span></button>
+						<?php foreach ( $types as $label => $count ) : ?>
+							<button type="button" class="sk-filter__btn" data-filter="<?php echo esc_attr( sanitize_title( $label ) ); ?>" aria-pressed="false"><?php echo esc_html( $label ); ?> <span class="sk-filter__count"><?php echo (int) $count; ?></span></button>
+						<?php endforeach; ?>
+					</div>
+				<?php endif; ?>
+				<?php if ( ! $use_filter ) : ?>
+					<p class="sk-catalog__count">
+						<?php
+						$noun = 'product' === $post_type
+							/* translators: %d: number of products */
+							? _n( '%d product', '%d products', count( $posts ), 'sekeco' )
+							/* translators: %d: number of entries */
+							: _n( '%d entry', '%d entries', count( $posts ), 'sekeco' );
+
+						echo esc_html( sprintf( $noun, count( $posts ) ) );
+						?>
+					</p>
+				<?php endif; ?>
+				<label class="sk-catalog__search">
+					<span class="screen-reader-text"><?php esc_html_e( 'Search the list', 'sekeco' ); ?></span>
+					<input type="search" data-sk-search placeholder="<?php esc_attr_e( 'Search the list', 'sekeco' ); ?>" autocomplete="off">
+				</label>
+			</div>
+		<?php endif; ?>
+		<div class="sk-projects__list">
+			<?php foreach ( $posts as $item ) : ?>
+				<?php
+				$label = 'product' === $item->post_type ? (string) get_post_meta( $item->ID, 'sekeco_product_type', true ) : '';
+				$label = '' !== $label ? $label : $other;
+				?>
+				<div class="sk-projects__item" data-terms="<?php echo esc_attr( sanitize_title( $label ) ); ?>">
+					<?php echo sekeco_render_catalog_row( $item ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
+			<?php endforeach; ?>
+		</div>
+		<?php if ( $filter ) : ?>
+			<p class="sk-catalog__empty" data-sk-empty hidden><?php esc_html_e( 'Nothing matches. Clear the search or pick another type.', 'sekeco' ); ?></p>
+		<?php endif; ?>
+	</div>
+	<?php
+	return;
+endif;
 
 if ( 'list' === $layout ) :
 	?>

@@ -1,0 +1,106 @@
+// On this page: a quiet list that follows the reader. Outline only, no fill.
+.sk-toc {
+	color: var(--sk-fg);
+}
+
+.sk-toc__title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 0 0 12px;
+	font-size: 0.8125rem;
+	letter-spacing: 0.04em;
+	color: var(--sk-muted);
+	cursor: pointer;
+	list-style: none;
+
+	&::-webkit-details-marker {
+		display: none;
+	}
+}
+
+// Wide screens keep it open; the summary is then only a label.
+@media (min-width: 1000px) {
+
+	.sk-toc__title {
+		pointer-events: none;
+		cursor: default;
+	}
+}
+
+.sk-toc__list {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-left: 1px solid var(--sk-line);
+}
+
+.sk-toc__item a {
+	display: block;
+	padding: 7px 0 7px 16px;
+	margin-left: -1px;
+	border-left: 1px solid transparent;
+	font-size: 0.9375rem;
+	line-height: 1.35;
+	color: var(--sk-muted);
+	text-decoration: none;
+	transition: color 0.25s ease, border-color 0.25s ease;
+
+	&:hover,
+	&:focus-visible {
+		color: var(--sk-fg);
+	}
+
+	&[aria-current="location"] {
+		border-left-color: var(--sk-fg);
+		color: var(--sk-fg);
+	}
+}
+
+.sk-toc__item--h3 a {
+	padding-left: 32px;
+	font-size: 0.875rem;
+}
+
+.sk-toc__chevron {
+	flex: none;
+	transition: transform 0.3s ease;
+}
+
+.sk-toc[open] .sk-toc__chevron {
+	transform: rotate(180deg);
+}
+
+// Wide: always open, so no chevron.
+@media (min-width: 1000px) {
+
+	.sk-toc__chevron {
+		display: none;
+	}
+}
+
+// Small screens: a bordered disclosure above the story. Until the script has
+// decided, the list stays hidden so it never flashes open.
+@media (max-width: 999px) {
+
+	.sk-toc:not([data-sk-ready]) nav {
+		display: none;
+	}
+
+	.sk-toc {
+		padding: 14px 18px;
+		border: 1px solid var(--sk-line);
+		border-radius: var(--sk-radius-sm, 10px);
+	}
+
+	.sk-toc__title {
+		margin: 0;
+	}
+
+	.sk-toc[open] .sk-toc__title {
+		margin-bottom: 12px;
+	}
+}

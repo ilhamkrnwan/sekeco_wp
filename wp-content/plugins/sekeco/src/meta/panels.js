@@ -1,7 +1,11 @@
 /**
  * Native document settings panels for Works, Portfolio, and Team meta.
  */
-import { TextControl } from '@wordpress/components';
+import {
+	SelectControl,
+	TextControl,
+	TextareaControl,
+} from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { __ } from '@wordpress/i18n';
@@ -59,6 +63,63 @@ const PortfolioPanel = ( { meta, setMeta } ) => (
 			value={ meta.sekeco_portfolio_url || '' }
 			onChange={ ( value ) => setMeta( 'sekeco_portfolio_url', value ) }
 		/>
+		<TextControl
+			label={ __( 'Services', 'sekeco' ) }
+			value={ meta.sekeco_portfolio_services || '' }
+			onChange={ ( value ) =>
+				setMeta( 'sekeco_portfolio_services', value )
+			}
+			help={ __( 'Comma separated: Branding, Web, Mobile', 'sekeco' ) }
+		/>
+		<TextControl
+			label={ __( 'Industry', 'sekeco' ) }
+			value={ meta.sekeco_portfolio_industry || '' }
+			onChange={ ( value ) =>
+				setMeta( 'sekeco_portfolio_industry', value )
+			}
+		/>
+		<TextControl
+			label={ __( 'Duration', 'sekeco' ) }
+			value={ meta.sekeco_portfolio_duration || '' }
+			onChange={ ( value ) =>
+				setMeta( 'sekeco_portfolio_duration', value )
+			}
+			help={ __( 'Example: 3 months', 'sekeco' ) }
+		/>
+		<TextControl
+			label={ __( 'Tech stack', 'sekeco' ) }
+			value={ meta.sekeco_portfolio_stack || '' }
+			onChange={ ( value ) => setMeta( 'sekeco_portfolio_stack', value ) }
+			help={ __( 'Comma separated: Nuxt, Supabase', 'sekeco' ) }
+		/>
+		<TextControl
+			label={ __( 'Team', 'sekeco' ) }
+			value={ meta.sekeco_portfolio_team || '' }
+			onChange={ ( value ) => setMeta( 'sekeco_portfolio_team', value ) }
+			help={ __(
+				'Comma separated names. A name that matches a Team entry links to it.',
+				'sekeco'
+			) }
+		/>
+		<TextareaControl
+			label={ __( 'Outcome', 'sekeco' ) }
+			value={ meta.sekeco_portfolio_outcome || '' }
+			onChange={ ( value ) =>
+				setMeta( 'sekeco_portfolio_outcome', value )
+			}
+			help={ __(
+				'One or two sentences about the result, in your own words.',
+				'sekeco'
+			) }
+		/>
+		<TextControl
+			type="url"
+			label={ __( 'Case study URL', 'sekeco' ) }
+			value={ meta.sekeco_portfolio_case_study || '' }
+			onChange={ ( value ) =>
+				setMeta( 'sekeco_portfolio_case_study', value )
+			}
+		/>
 	</PluginDocumentSettingPanel>
 );
 
@@ -67,6 +128,29 @@ const ProductPanel = ( { meta, setMeta } ) => (
 		name="sekeco-product-details"
 		title={ __( 'Portfolio details', 'sekeco' ) }
 	>
+		<SelectControl
+			label={ __( 'Type', 'sekeco' ) }
+			value={ meta.sekeco_product_type || '' }
+			options={ [
+				{ label: __( 'Not set', 'sekeco' ), value: '' },
+				...(
+					window.sekecoProductTypes || [
+						'SaaS',
+						'Plugin',
+						'Tool',
+						'Library',
+						'App',
+						'Template',
+						'Other',
+					]
+				).map( ( type ) => ( { label: type, value: type } ) ),
+			] }
+			onChange={ ( value ) => setMeta( 'sekeco_product_type', value ) }
+			help={ __(
+				'Used for the filter on the Portfolio page.',
+				'sekeco'
+			) }
+		/>
 		<TextControl
 			type="url"
 			label={ __( 'Project URL', 'sekeco' ) }
@@ -94,6 +178,48 @@ const ProductPanel = ( { meta, setMeta } ) => (
 			label={ __( 'Repository', 'sekeco' ) }
 			value={ meta.sekeco_product_repo || '' }
 			onChange={ ( value ) => setMeta( 'sekeco_product_repo', value ) }
+		/>
+		<TextControl
+			label={ __( 'Version', 'sekeco' ) }
+			value={ meta.sekeco_product_version || '' }
+			onChange={ ( value ) => setMeta( 'sekeco_product_version', value ) }
+			help={ __( 'Example: 2.1.0', 'sekeco' ) }
+		/>
+		<TextControl
+			label={ __( 'Platform', 'sekeco' ) }
+			value={ meta.sekeco_product_platform || '' }
+			onChange={ ( value ) =>
+				setMeta( 'sekeco_product_platform', value )
+			}
+			help={ __( 'Comma separated: Web, WordPress, CLI', 'sekeco' ) }
+		/>
+		<TextControl
+			type="url"
+			label={ __( 'Documentation URL', 'sekeco' ) }
+			value={ meta.sekeco_product_docs || '' }
+			onChange={ ( value ) => setMeta( 'sekeco_product_docs', value ) }
+		/>
+		<TextControl
+			type="url"
+			label={ __( 'Demo URL', 'sekeco' ) }
+			value={ meta.sekeco_product_demo || '' }
+			onChange={ ( value ) => setMeta( 'sekeco_product_demo', value ) }
+		/>
+		<TextControl
+			type="url"
+			label={ __( 'Download URL', 'sekeco' ) }
+			value={ meta.sekeco_product_download || '' }
+			onChange={ ( value ) =>
+				setMeta( 'sekeco_product_download', value )
+			}
+		/>
+		<TextControl
+			type="url"
+			label={ __( 'Changelog URL', 'sekeco' ) }
+			value={ meta.sekeco_product_changelog || '' }
+			onChange={ ( value ) =>
+				setMeta( 'sekeco_product_changelog', value )
+			}
 		/>
 	</PluginDocumentSettingPanel>
 );

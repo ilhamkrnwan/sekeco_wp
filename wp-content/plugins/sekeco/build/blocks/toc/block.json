@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "sekeco/toc",
+  "version": "1.0.0",
+  "title": "On this page",
+  "category": "sekeco-utility",
+  "description": "A contents list built from the entry's own H2 and H3 headings. It follows the reader down the page and hides itself when there are fewer than three headings.",
+  "keywords": [
+    "table of contents",
+    "toc",
+    "contents",
+    "headings",
+    "navigation"
+  ],
+  "textdomain": "sekeco",
+  "attributes": {},
+  "usesContext": [
+    "postId"
+  ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "spacing": {
+      "margin": [
+        "top",
+        "bottom"
+      ]
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php",
+  "example": {}
+}

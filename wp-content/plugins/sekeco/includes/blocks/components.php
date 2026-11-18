@@ -41,6 +41,7 @@ function sekeco_component_blocks() {
 			'theme-toggle',
 			'search',
 			'scroll-top',
+			'toc',
 		)
 	);
 }
@@ -121,6 +122,9 @@ function sekeco_entry_facts( $post ) {
 	$meta  = static function ( $key ) use ( $post ) {
 		return trim( (string) get_post_meta( $post->ID, $key, true ) );
 	};
+	$list  = static function ( $value ) {
+		return array_values( array_filter( array_map( 'trim', preg_split( '/[,\/|·]+/', (string) $value ) ) ) );
+	};
 	$facts = array();
 	$text  = static function ( $label, $value, $type = 'text' ) use ( &$facts ) {
 		if ( '' !== $value ) {
@@ -128,6 +132,16 @@ function sekeco_entry_facts( $post ) {
 				'label' => $label,
 				'type'  => $type,
 				'value' => $value,
+			);
+		}
+	};
+	$chips = static function ( $label, $items ) use ( &$facts ) {
+		if ( $items ) {
+			$facts[] = array(
+				'label' => $label,
+				'type'  => 'chips',
+				'value' => implode( ', ', $items ),
+				'items' => $items,
 			);
 		}
 	};
@@ -148,27 +162,50 @@ function sekeco_entry_facts( $post ) {
 	switch ( $post->post_type ) {
 		case 'portfolio':
 			$text( __( 'Client', 'sekeco' ), $meta( 'sekeco_portfolio_client' ) );
+			$text( __( 'Industry', 'sekeco' ), $meta( 'sekeco_portfolio_industry' ) );
+			$chips( __( 'Services', 'sekeco' ), $list( $meta( 'sekeco_portfolio_services' ) ) );
 			$text( __( 'Role', 'sekeco' ), $meta( 'sekeco_portfolio_role' ) );
-			$text( __( 'Year', 'sekeco' ), $meta( 'sekeco_portfolio_year' ) );
-			$link( __( 'Project', 'sekeco' ), $meta( 'sekeco_portfolio_url' ) );
-			break;
 
-		case 'product':
-			$text( __( 'Status', 'sekeco' ), $meta( 'sekeco_product_status' ), 'status' );
+			$people = array();
 
-			$stack = array_filter( array_map( 'trim', preg_split( '/[,\/|·]+/', $meta( 'sekeco_product_stack' ) ) ) );
-
-			if ( $stack ) {
-				$facts[] = array(
-					'label' => __( 'Stack', 'sekeco' ),
-					'type'  => 'chips',
-					'value' => implode( ', ', $stack ),
-					'items' => array_values( $stack ),
+			foreach ( $list( $meta( 'sekeco_portfolio_team' ) ) as $name ) {
+				$member   = get_page_by_title( $name, OBJECT, 'team' );
+				$people[] = array(
+					'name' => $name,
+					'url'  => $member && 'publish' === $member->post_status ? get_permalink( $member ) : '',
 				);
 			}
 
+			if ( $people ) {
+				$facts[] = array(
+					'label' => __( 'Team', 'sekeco' ),
+					'type'  => 'people',
+					'value' => implode( ', ', wp_list_pluck( $people, 'name' ) ),
+					'items' => $people,
+				);
+			}
+
+			$text( __( 'Duration', 'sekeco' ), $meta( 'sekeco_portfolio_duration' ) );
+			$text( __( 'Year', 'sekeco' ), $meta( 'sekeco_portfolio_year' ) );
+			$chips( __( 'Stack', 'sekeco' ), $list( $meta( 'sekeco_portfolio_stack' ) ) );
+			$text( __( 'Outcome', 'sekeco' ), $meta( 'sekeco_portfolio_outcome' ), 'note' );
+			$link( __( 'Project', 'sekeco' ), $meta( 'sekeco_portfolio_url' ) );
+			$link( __( 'Case study', 'sekeco' ), $meta( 'sekeco_portfolio_case_study' ) );
+			break;
+
+		case 'product':
+			$text( __( 'Type', 'sekeco' ), $meta( 'sekeco_product_type' ) );
+			$text( __( 'Status', 'sekeco' ), $meta( 'sekeco_product_status' ), 'status' );
+			$text( __( 'Version', 'sekeco' ), $meta( 'sekeco_product_version' ) );
+			$chips( __( 'Platform', 'sekeco' ), $list( $meta( 'sekeco_product_platform' ) ) );
+			$chips( __( 'Stack', 'sekeco' ), $list( $meta( 'sekeco_product_stack' ) ) );
 			$text( __( 'Year', 'sekeco' ), $meta( 'sekeco_product_year' ) );
 			$text( __( 'Repository', 'sekeco' ), $meta( 'sekeco_product_repo' ) );
+			$link( __( 'Website', 'sekeco' ), $meta( 'sekeco_product_url' ) );
+			$link( __( 'Docs', 'sekeco' ), $meta( 'sekeco_product_docs' ) );
+			$link( __( 'Demo', 'sekeco' ), $meta( 'sekeco_product_demo' ) );
+			$link( __( 'Download', 'sekeco' ), $meta( 'sekeco_product_download' ) );
+			$link( __( 'Changelog', 'sekeco' ), $meta( 'sekeco_product_changelog' ) );
 			break;
 
 		case 'team':
@@ -179,6 +216,64 @@ function sekeco_entry_facts( $post ) {
 	}
 
 	return $facts;
+}
+
+/**
+ * One plain sentence about an entry: its excerpt, or the opening paragraph.
+ *
+ * @param WP_Post $post  Entry.
+ * @param int     $words Maximum words.
+ * @return string
+ */
+function sekeco_entry_summary( $post, $words = 22 ) {
+	if ( post_password_required( $post ) ) {
+		return '';
+	}
+
+	if ( has_excerpt( $post ) ) {
+		$text = $post->post_excerpt;
+	} elseif ( preg_match( '#<p[^>]*>(.*?)</p>#is', (string) $post->post_content, $match ) ) {
+		$text = $match[1];
+	} else {
+		$text = '';
+	}
+
+	$text = trim( preg_replace( '/\s+/', ' ', html_entity_decode( wp_strip_all_tags( strip_shortcodes( $text ) ), ENT_QUOTES, 'UTF-8' ) ) );
+
+	return wp_trim_words( $text, $words, '…' );
+}
+
+/**
+ * Markup of one catalog row: name and what it does, type, status, year.
+ *
+ * @param WP_Post $post Entry.
+ * @return string
+ */
+function sekeco_render_catalog_row( $post ) {
+	list( $name, $detail ) = sekeco_split_title( get_the_title( $post ) );
+
+	$is_product = 'product' === $post->post_type;
+	$type       = $is_product ? (string) get_post_meta( $post->ID, 'sekeco_product_type', true ) : '';
+	$status     = $is_product ? (string) get_post_meta( $post->ID, 'sekeco_product_status', true ) : '';
+	$year       = (string) get_post_meta( $post->ID, $is_product ? 'sekeco_product_year' : 'sekeco_portfolio_year', true );
+	$summary    = '' !== $detail ? $detail : sekeco_entry_summary( $post );
+
+	ob_start();
+	?>
+	<a class="sk-row sk-row--catalog" href="<?php echo esc_url( get_permalink( $post ) ); ?>">
+		<span class="sk-catalog__main">
+			<span class="sk-row__name"><?php echo esc_html( $name ); ?></span>
+			<?php if ( '' !== $summary ) : ?>
+				<span class="sk-catalog__summary"><?php echo esc_html( $summary ); ?></span>
+			<?php endif; ?>
+		</span>
+		<span class="sk-catalog__type"><?php echo esc_html( $type ); ?></span>
+		<span class="sk-catalog__status<?php echo 'live' === strtolower( $status ) ? ' is-live' : ''; ?>"><?php echo esc_html( $status ); ?></span>
+		<span class="sk-row__year"><?php echo esc_html( $year ); ?></span>
+		<span class="sk-row__go"><?php echo sekeco_icon( 'arrow-right-up', array( 'size' => 22 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+	</a>
+	<?php
+	return (string) ob_get_clean();
 }
 
 /**
@@ -257,7 +352,7 @@ function sekeco_query_projects( $post_type, $count, $term_id = 0 ) {
 	$args = array(
 		'post_type'           => $post_type,
 		'post_status'         => 'publish',
-		'posts_per_page'      => max( 1, min( 24, (int) $count ) ),
+		'posts_per_page'      => max( 1, min( 200, (int) $count ) ),
 		'ignore_sticky_posts' => true,
 		'no_found_rows'       => true,
 	);

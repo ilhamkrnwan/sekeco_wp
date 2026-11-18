@@ -22,12 +22,13 @@ if ( ! $post || post_password_required( $post ) ) {
 
 $facts = sekeco_entry_facts( $post );
 
-// The links layout shows only the outbound links; the others show every fact.
-if ( 'links' === $layout ) {
+// Links are actions: the links layout shows only them, and the strip leaves
+// them out (a page puts them in its buttons).
+if ( 'links' === $layout || 'strip' === $layout ) {
 	$facts = array_filter(
 		$facts,
-		static function ( $fact ) {
-			return 'link' === $fact['type'];
+		static function ( $fact ) use ( $layout ) {
+			return ( 'link' === $fact['type'] ) === ( 'links' === $layout );
 		}
 	);
 }
@@ -56,7 +57,7 @@ endif;
 ?>
 <dl <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php foreach ( $facts as $fact ) : ?>
-		<div class="sk-facts__row">
+		<div class="sk-facts__row<?php echo 'note' === $fact['type'] ? ' sk-facts__row--note' : ''; ?>">
 			<dt><?php echo esc_html( $fact['label'] ); ?></dt>
 			<dd>
 				<?php if ( 'link' === $fact['type'] ) : ?>
@@ -68,6 +69,18 @@ endif;
 					<ul class="sk-facts__chips">
 						<?php foreach ( $fact['items'] as $item ) : ?>
 							<li><?php echo esc_html( $item ); ?></li>
+						<?php endforeach; ?>
+					</ul>
+				<?php elseif ( 'people' === $fact['type'] ) : ?>
+					<ul class="sk-facts__people">
+						<?php foreach ( $fact['items'] as $person ) : ?>
+							<li>
+								<?php if ( '' !== $person['url'] ) : ?>
+									<a class="sk-facts__link" href="<?php echo esc_url( $person['url'] ); ?>"><?php echo esc_html( $person['name'] ); ?></a>
+								<?php else : ?>
+									<?php echo esc_html( $person['name'] ); ?>
+								<?php endif; ?>
+							</li>
 						<?php endforeach; ?>
 					</ul>
 				<?php elseif ( 'status' === $fact['type'] ) : ?>
