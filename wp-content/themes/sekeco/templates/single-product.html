@@ -8,13 +8,27 @@
 <div class="wp-block-group sk-prod__text">
 <!-- wp:post-title {"level":1,"className":"sk-split-title"} /-->
 
-<!-- wp:post-terms {"term":"category","separator":"","className":"sk-pills"} /-->
+<!-- wp:post-excerpt {"moreText":"","excerptLength":40,"className":"sk-lead"} /-->
 
-<!-- wp:post-content {"className":"sk-story sk-story--lede","layout":{"type":"default"}} /-->
-
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_product_url"}}}}} -->
+<!-- wp:buttons {"className":"sk-prod__actions"} -->
+<div class="wp-block-buttons sk-prod__actions"><!-- wp:button {"metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_product_url"}}}}} -->
 <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#">Visit product</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline","metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_product_demo"}}}}} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#">Live demo</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline","metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_product_docs"}}}}} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#">Docs</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline","metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_product_download"}}}}} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#">Download</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-outline","metadata":{"bindings":{"url":{"source":"sekeco/meta","args":{"key":"sekeco_product_changelog"}}}}} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#">Changelog</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons -->
 </div>
@@ -30,13 +44,23 @@
 <div class="wp-block-group sk-prod-facts sk-wrap"><!-- wp:sekeco/facts {"layout":"strip"} /--></div>
 <!-- /wp:group -->
 
+<!-- wp:group {"className":"sk-prod-body sk-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group sk-prod-body sk-wrap">
+<!-- wp:group {"tagName":"aside","className":"sk-prod-body__aside","layout":{"type":"default"}} -->
+<aside class="wp-block-group sk-prod-body__aside"><!-- wp:sekeco/toc /--></aside>
+<!-- /wp:group -->
+
+<!-- wp:post-content {"className":"sk-story sk-story--lede","layout":{"type":"default"}} /-->
+</div>
+<!-- /wp:group -->
+
 <!-- wp:group {"className":"sk-more sk-wrap","layout":{"type":"default"}} -->
 <div class="wp-block-group sk-more sk-wrap">
 <!-- wp:heading {"className":"sk-more__title"} -->
 <h2 class="wp-block-heading sk-more__title">Also in the <em>portfolio.</em></h2>
 <!-- /wp:heading -->
 
-<!-- wp:sekeco/project-grid {"postType":"product","layout":"list","perPage":4} /-->
+<!-- wp:sekeco/project-grid {"postType":"product","layout":"catalog","perPage":4} /-->
 </div>
 <!-- /wp:group -->
 
