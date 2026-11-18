@@ -225,6 +225,28 @@ sehingga pengembangan bisa bertahap.
   ke 35% resolusi dan 20fps. Shader gagal compile atau context WebGL hilang membuat
   blok kembali ke ground normalnya.
 
+### Properti, katalog, dan daftar isi
+
+- **Properti Works** (panel *Work details*): Client, Year, Role, Project URL, plus Services,
+  Industry, Duration, Tech stack, Team (nama dipisah koma; nama yang cocok dengan entri
+  Team menjadi tautan), Outcome (kalimat sendiri, bukan angka), dan Case study URL.
+- **Properti Portfolio** (panel *Portfolio details*): Type (SaaS, Plugin, Tool, Library, App,
+  Template, Other; daftar bisa diubah lewat filter `sekeco_product_types`), Status, Version,
+  Platform, Stack, Year, Repository, dan tautan Website, Docs, Demo, Download, Changelog.
+- Semua properti tampil lewat blok **`sekeco/facts`** (layout ledger, strip, atau links) dan
+  field kosong disembunyikan. Tombol aksi di halaman produk memakai binding `sekeco/meta`,
+  jadi tombol tanpa tautan tidak tampil.
+- **Project grid layout `catalog`**: satu baris per produk (nama, satu kalimat dari excerpt
+  atau paragraf pertama, jenis, status, tahun), filter jenis berhitung, dan kolom cari.
+  Produk tanpa Type masuk kelompok *Other*; selama semuanya satu kelompok, filter diganti
+  hitungan "N products". Batas query blok ini 200 entri.
+- **Blok `sekeco/toc`** (*On this page*): daftar isi dari heading H2 dan H3 entri, sticky di
+  layar lebar dan disclosure tertutup di layar kecil, menandai heading yang sedang dibaca,
+  dan menyembunyikan diri bila heading kurang dari tiga. `includes/blocks/toc.php` memberi
+  `id` pada heading di dalam Post Content yang belum punya anchor.
+- Menu situs (termasuk Journal) hidup di database sebagai entri Navigation, bukan di repo;
+  hapus atau tambah item lewat Site Editor.
+
 ### Form
 
 - Builder berupa meta box di editor klasik (bukan block editor): kartu field
