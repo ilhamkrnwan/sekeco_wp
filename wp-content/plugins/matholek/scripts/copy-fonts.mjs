@@ -1,7 +1,7 @@
 /**
  * Copy the self-hosted font files into the Matholek theme.
  *
- * Manrope (variable, latin + latin-ext) for text, Amiri 400 (arabic + latin)
+ * Manrope (variable, latin + latin-ext) for text, Amiri 400 (arabic)
  * for Arabic accents. Run `bun run fonts` after updating the font packages.
  */
 import { copyFileSync, mkdirSync } from 'node:fs';
@@ -15,7 +15,6 @@ const FILES = [
 	'@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2',
 	'@fontsource-variable/manrope/files/manrope-latin-ext-wght-normal.woff2',
 	'@fontsource/amiri/files/amiri-arabic-400-normal.woff2',
-	'@fontsource/amiri/files/amiri-latin-400-normal.woff2',
 ];
 
 mkdirSync( dest, { recursive: true } );

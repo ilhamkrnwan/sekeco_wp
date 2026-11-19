@@ -49,6 +49,4 @@ Thumbs.db
 *.log
 
 # Local Matholek sample data (photos and seed script), never committed
-.scratch/matholek-photos/
-.scratch/matholek-sample.php
-.scratch/matholek-check.php
+.scratch/matholek-*
